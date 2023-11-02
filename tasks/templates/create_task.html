@@ -1,0 +1,104 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+    
+
+    <div class="container">
+        <div class="form-container">
+            <h1>Crear tareas</h1>
+
+            {{ error }}
+
+            <form action="/tasks/create/" method="post">
+                {% csrf_token %}
+
+                <label for="title" class="form-label">Nombre de la tarea</label>
+                <input type="text" name="title" class="form-control" id="title">
+                <label for="description" class="form-label">Descripción</label>
+                <input type="text" name="description" class="form-control" id="description">
+                <label for="datecompleted" class="form-label">Fecha tarea Completada</label>
+                <input type="date" name="datecompleted" class="form-control" id="datecompleted">
+                <div class="form-check">
+                    <input type="checkbox" name="important" class="form-check-input" id="important">
+                    <label for="important" class="form-check-label">Es importante</label>
+                </div>
+                <label for="estadotarea" class="form-label">Estado de la tarea</label>
+                <select name="estadotarea" id="estadotarea" class="form-select">
+                    <option value="Iniciada">Iniciada</option>
+                    <option value="Proceso">Proceso</option>
+                </select>
+                <label for="NotasTarea" class="form-label">Notas de tarea</label>
+                <input type="text" name="NotasTarea" class="form-control" id="NotasTarea">
+                <label for="Comentarios" class="form-label">Comentarios</label>
+                <input type="text" name="Comentarios" class="form-control" id="Comentarios">
+                
+                <!-- Este es un comentario en HTML.-->
+                
+                <label for="empleado_asignado" class="form-label">Seleccione un empleado</label>
+                <select name="empleado_asignado" id="empleado_asignado" class="form-select">
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.nombre }}</option>
+                    {% endfor %}
+                </select>
+                
+                <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+                
+                
+            </form>
+            
+        </div>
+    </div>
+    
+    <style>
+
+
+body {
+    font-family: Arial, sans-serif; /* Fuente predeterminada para el cuerpo */
+    background-color: #3232de; /* Color de fondo del cuerpo */
+    margin: 0; /* Elimina los márgenes predeterminados */
+    padding: 0; /* Elimina el relleno predeterminado */
+}
+
+        .form-container {
+            background-color: #f8f9fa; /* Color de fondo */
+            padding: 20px;
+            border: 1px solid #dee2e6; /* Borde del formulario */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto; /* Centra el formulario horizontalmente */
+        }
+    
+        .form-label {
+            font-weight: bold; /* Estilo de etiquetas en negrita */
+        }
+    
+        .form-control {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da; /* Borde de campos de entrada */
+            border-radius: 5px;
+        }
+    
+        .form-check-input {
+            margin-right: 10px;
+        }
+    
+        .btn {
+            background-color: #007bff; /* Color de fondo del botón */
+            color: #fff; /* Color del texto del botón */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .btn:hover {
+            background-color: #0056b3; /* Color de fondo al pasar el cursor sobre el botón */
+        }
+    </style>
+</body>
+    
+{% endblock %}

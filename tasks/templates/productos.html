@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ error }}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+
+<body>
+    <div class="container mt-4">
+
+        
+        {% if user.is_superuser or user.is_staff %}
+
+        <script>
+            $(document).ready(function () {
+                var table = $('#tablaProductos').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {   
+                            
+                            extend: 'excelHtml5',
+                            text: 'Excel',
+                            title: 'Tabla de Productos',
+                            className: 'btn-excel',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5]
+                            }
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: 'PDF',
+                            filename: 'tabla_Productos',
+                            title: 'Tabla de Productos',
+                            className: 'btn-pdf',
+                            customize: function (doc) {
+                                var totalstock = calcularTotalStock();
+                                doc.content.push({
+                                    text: 'Total de Stock Filtrado: ' + totalstock,
+                                    margin: [0, 0, 20, 0],
+                                    alignment: 'right'
+                                });
+                            },
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5]
+                            }
+                        }
+                    ],
+                    select: true
+                });
+        
+                $('#filtroEstado, #filtroProveedor').on('keyup', function () {
+                    table
+                        .columns(4)
+                        .search($('#filtroEstado').val())
+                        .columns(5)
+                        .search($('#filtroProveedor').val())
+                        .draw();
+                });
+        
+                function calcularTotalStock() {
+                    var totalstock = 0;
+                    table.rows({ search: 'applied' }).data().each(function (value, index) {
+                        totalstock += parseFloat(value[0]);
+                    });
+                    return totalstock.toFixed(2);
+                }
+            });
+        </script>
+
+        <a href="/productos/" class="text-dark text-decoration-none"><h1>Productos</h1></a>
+    
+        <a href="/productos/create/" class="btn btn-danger mt-3">Agregar producto</a>
+     
+        <!-- Agregar campos de búsqueda -->
+        <div class="mb-3">
+            <label for="filtroEstado" class="form-label">Buscar por Estado:</label>
+            <input type="text" class="form-control" id="filtroEstado">
+        </div>
+        <div class="mb-3">
+            <label for="filtroProveedor" class="form-label">Buscar por Proveedor:</label>
+            <input type="text" class="form-control" id="filtroProveedor">
+        </div>
+     
+
+        {% endif %}
+
+        <div class="table-responsive rounded">
+            
+            <table id="tablaProductos" class="table table-bordered table-striped rounded">
+                <center>
+                    <h1>Lista de Productos</h1>
+                </center>
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Stock</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Categoria</th>
+                        <th>Estado</th>
+                        {% if user.is_superuser or user.is_staff %}
+                                                          
+                        <th>visto</th>
+                        {% endif %}
+                        
+                        {% if user.is_superuser or user.is_staff %}
+                        <th>Proveedor</th>
+                        <th>Creador</th>
+                        <th>Detalles</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.canStock }}</td>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.descripcion }}</td>
+                        <td>{{ producto.categoria }}</td>
+                        <td>{{ producto.estado }}</td>
+                        {% if user.is_superuser or user.is_staff %}
+                        <td>{{ producto.visto}}</td>
+                        {% endif %}
+                        {% if user.is_superuser or user.is_staff %}
+                        <td>{{ producto.idProveedor }}</td>
+                        <td>{{ producto.user.username }}</td>                    
+                        <td><a href="{% url 'producto_detail' producto.id %}">Detalles</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <style>
+        .btn-pdf {
+            background-color: red !important;
+            color: white !important;
+        }
+    
+        .btn-excel {
+            background-color: white !important;
+            color: black !important;
+        }
+    
+        #tablaProductos_filter input[type="search"] {
+            background-color: white;
+            color: black;
+        }
+    
+        body {
+            background-color: cornsilk;
+            background-size: cover;
+        }
+    </style>
+    
+</body>
+
+
+
+{% endblock %}

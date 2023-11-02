@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ error }}
+<body>
+<div class="container mt-4">
+    <a href="/tickets/" class="text-dark text-decoration-none"><h1>TICKETS</h1></a>
+    
+<a href="/tickets/create/" class="btn btn-danger mt-3">Crear nuevo Ticket</a>
+
+
+</div>
+
+
+
+<h1 class="text-center">Lista de Tickets</h1>
+
+<main class="container">
+    <div class="table-responsive rounded">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Asunto</th>
+                    <th>descripcion</th>
+                    <th>Pagado</th>
+                    <th>Creador</th>
+                    
+                    <th>Detalles</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.fechaCreacion }}</td>
+                    <td>{{ ticket.asunto }}</td>
+                    <td>{{ ticket.descripcion}}</td>
+                    <td>{{ ticket.estadoTicket}}</td>
+                    <td>{{ ticket.user.username }}</td>
+                    <td><a href="{% url 'ticket_detail' ticket.id %}">Detalles</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+</body>
+<style>
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+        background-color: #f8f9fa;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .rounded {
+        border-radius: 1em; /* Ajusta el valor según el grado de ovalado que desees */
+        overflow: hidden;
+    }
+
+    body {
+        background-color: darkkhaki ;
+        background-size: cover;
+    }
+</style>
+
+{% endblock %}

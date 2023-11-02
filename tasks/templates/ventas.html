@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{error}}
+
+<body>
+
+    <div class="container mt-4">
+        <a href="/ventas/" class="text-dark text-decoration-none">
+            <h1>Ventas</h1>
+        </a>
+
+        <a href="/ventas/create/" class="btn btn-danger mt-3">Agregar Ventas</a>
+
+
+        <div class="mb-3">
+            <label for="filtroCliente" class="form-label">Buscar por Cliente:</label>
+            <input type="text" class="form-control" id="filtroCliente">
+        </div>
+        <div class="mb-3">
+            <label for="filtroEmpleado" class="form-label">Buscar por Empleado:</label>
+            <input type="text" class="form-control" id="filtroEmpleado">
+        </div>
+
+
+        <div class="table-responsive rounded">
+            <center>
+                <h1>Lista Ventas</h1>
+            </center>
+            <table id="tablaVentas" class="table table-bordered table-striped rounded">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Total Venta</th>
+                        <th>Estado</th>
+                        <th>Fecha Venta</th>
+                        <th>Cliente</th>
+                        <th>Descripcion</th>
+                        <th>Visto</th>
+
+                        <th>Creador</th>
+                        {% if user.is_superuser or user.is_staff %}
+                        <th>Detalles</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venta in ventas %}
+                    <tr>
+                        <td>{{ venta.totalVenta }}</td>
+                        <td>{{ venta.estado }}</td>
+                        <td>{{ venta.FechaVenta|date:"d/m/Y" }}</td>
+
+
+                        <td>{{ venta.idCliente }}</td>
+                        <td>{{ venta.descripcion}}</td>
+                        <td>{{ venta.visto}}</td>
+                        <td>{{ venta.user.username }}</td>
+                        {% if user.is_superuser or user.is_staff %}
+                        <td><a href="{% url 'venta_detail' venta.id %}">Detalles</a></td>
+                        {% endif %}
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+
+
+<style>
+    /* ESTE CODIGO ES EL BUENO */
+
+    body {
+        /*background-image: url('https://cecytebcs.edu.mx/wp-content/uploads/2022/02/ventas.jpg');*/
+        background-color: rgb(158, 167, 238);
+        background-size: cover;
+    }
+
+
+    .btn-excel {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    .btn-pdf {
+        background-color: red !important;
+        color: white !important;
+    }
+
+    #tablaVentas_filter input[type="search"] {
+        background-color: white;
+        color: black;
+    }
+</style>
+
+
+
+<script>
+
+    $(document).ready(function () {
+        var table = $('#tablaVentas').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+
+                {
+                    extend: 'excelHtml5',
+                    text: 'Excel',
+                    title: 'Tabla de Ventas',
+                    className: 'btn-excel', // Agregar esta clase para el botón de Excel
+                    exportOptions: {
+                        columns: [0, 1, 2, 3] // Columnas a exportar a Excel
+                    }
+                },
+
+                {
+                    extend: 'pdfHtml5',
+                    text: 'PDF',
+                    filename: 'tabla_Ventas',
+                    title: 'Tabla de Ventas',
+                    className: 'btn-pdf', // Agregar esta clase para el botón de PDF
+                    customize: function (doc) {
+                        var totalCostos = calcularTotalVentas();
+
+                        // Agregar la imagen y otros elementos personalizados al PDF...
+
+                        doc.content.push({
+                            text: 'Total de Costos Filtrados: $' + totalCostos,
+                            margin: [0, 0, 20, 0],
+                            alignment: 'right'
+                        });
+
+                        // Más código personalizado...
+                    },
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                }
+            ],
+            select: true
+        });
+
+        $('#filtroCliente, #filtroEmpleado').on('keyup', function () {
+            table
+                .columns(2)
+                .search($('#filtroCliente').val())
+                .columns(3)
+                .search($('#filtroEmpleado').val())
+                .draw();
+        });
+
+        function calcularTotalVentas() {
+            var totalVentas = 0;
+            table.rows({ search: 'applied' }).data().each(function (value, index) {
+                totalVentas += parseFloat(value[0]);
+            });
+            return totalVentas.toFixed(2);
+        }
+    });
+</script>
+
+
+
+
+</script>
+{% endblock %}

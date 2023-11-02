@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ error }}
+<body>
+    
+    <div class="container mt-4">
+        <a href="/herramientas/" class="text-dark text-decoration-none"><h1 >Herramientas</h1></a>
+
+        {% if user.is_superuser or user.is_staff %}
+<a href="{% url 'create_herramienta' %}" class="btn btn-danger mt-3">Crear nueva Herramienta</a>
+{% endif %}
+    </div>
+<div class="container mt-4">
+
+    <h2 class="text-center">Lista de Herramientas</h2>
+
+    <div class="table-responsive rounded">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Proveedor</th>
+                    <th>Valor</th>
+
+                    <th>Usuario</th>
+                    {% if user.is_superuser or user.is_staff %}
+                    <th>Detalles</th>
+                    {% endif %}
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for herramienta in herramientas %}
+                <tr>
+                    <td>{{ herramienta.nombreHerramienta }}</td>
+                    <td>{{ herramienta.marca }}</td>
+                    <td>{{ herramienta.idProveedor}}</td>
+                    <td>{{ herramienta.valor}}</td>
+                    <td>{{ herramienta.user.username}}</td>
+                    {% if user.is_superuser or user.is_staff %}
+                    <td><a href="{% url 'herramienta_detail' herramienta.id %}" >Detalles</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+<style>
+    body {
+        background-color: antiquewhite;
+        background-size: cover;
+    }
+</style>
+
+{% endblock %}

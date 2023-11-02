@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ error }}
+<body>
+    
+    <div class="container mt-4">
+        <a href="/clientes/" class="text-dark text-decoration-none"><h1 class="mt-5">Clientes</h1></a>
+
+        <a href="{% url 'create_cliente' %}" class="btn btn-danger mt-3">Crear nuevo cliente</a>
+
+
+        
+        
+    </div>
+    
+<div class="container mt-4">
+
+    <h2 class="text-center">Lista de clientes</h2>
+
+    <div class="table-responsive rounded">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Correo</th>
+                    <th>Fecha de cumpleaños</th>
+                    <th>Usuario</th>
+                    <th>Detalles</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.tipocliente }}</td>
+                    <td>{{ cliente.correo }}</td>
+                    <td>{{ cliente.fechanacimiento}}</td>
+                    <td>{{ cliente.user.username}}</td>
+                    <td><a href="{% url 'cliente_detail' cliente.id %}" >Detalles</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+<style>
+    body {
+        background-color: bisque;
+        background-size: cover;
+    }
+    
+</style>
+
+{% endblock %}

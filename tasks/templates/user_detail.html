@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+    
+        <center>
+            <!-- Título "Personalizarte Imprenta" con el mismo estilo -->
+            <div class="feature-box">
+                <h2>Personalizarte Imprenta</h2>
+            </div>
+        </center>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="custom-form-container p-4">
+                    <center>
+                    <h1>
+                        Editar Usuario
+                    </h1>
+                </center>
+                    {{ error }}
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary">
+                                Actualizar
+                            </button>
+                            <form action="{% url 'delete_users' user.id %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-danger">
+                                    Eliminar
+                                </button>
+                            </form>
+                            <a href="/users/" class="btn btn-secondary">
+                                Volver
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<style>
+    .custom-form-container {
+        background-color: #f8f9fa;
+        border: 1px solid #0f0101;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+     /* Estilos para la sección "Nosotros" con fondo oscuro y texto claro */
+     .feature-box {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+    
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* Estilo para el título "Personalizarte Imprenta" */
+        h1 {
+            font-family: '', cursive;
+            color: rgb(30, 39, 14);
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+    
+        h2 {
+            font-family: 'Pacifico', cursive;
+            color: rgb(94, 128, 49);
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+    
+        p {
+            font-size: 18px;
+        }
+
+</style>
+
+{% endblock %}

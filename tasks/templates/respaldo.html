@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1 class="display-4 mt-5">Respaldo de la Base de Datos</h1>
+            <p class="lead">Haz un respaldo seguro de tu base de datos.</p>
+            <form action="{% url 'respaldo' %}" method="post">
+                
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mt-3">Realizar Respaldo</button>
+            </form>
+
+           
+
+            <a href="/" class="btn btn-primary mt-3">Volver al inicio</a>
+        </div>
+    </div>
+
+    <style>
+
+
+        body {
+            font-family: Arial, sans-serif; /* Fuente predeterminada para el cuerpo */
+            background-image:url(https://atlantictech.io/wp-content/uploads/2022/08/4113d-basededatos.png);
+            margin: 0; /* Elimina los márgenes predeterminados */
+            padding: 0; /* Elimina el relleno predeterminado */
+        }
+        
+                .form-container {
+                    background-color: #f8f9fa; /* Color de fondo */
+                    padding: 20px;
+                    border: 1px solid #dee2e6; /* Borde del formulario */
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    max-width: 400px;
+                    margin: 0 auto; /* Centra el formulario horizontalmente */
+                }
+            
+                .form-label {
+                    font-weight: bold; /* Estilo de etiquetas en negrita */
+                }
+            
+                .form-control {
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    border: 1px solid #ced4da; /* Borde de campos de entrada */
+                    border-radius: 5px;
+                }
+            
+                .form-check-input {
+                    margin-right: 10px;
+                }
+            
+             
+            </style>
+        
+    </body>
+    
+</body>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ error }}
+<body>
+
+    <div class="container mt-4">
+        <a href="/users/" class="text-dark text-decoration-none"><h1>Usuarios</h1></a>
+
+
+    <a href="/users/create/" class="btn btn-danger mt-3">Crear nueva usuario</a>
+
+    </div>
+
+
+
+
+<h1 class="text-center">Lista de Usuarios</h1>
+    
+<main class="container">
+    <!--
+    <div class="table-responsive rounded">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Alias</th>
+                    <th>Tipo</th>
+                    <th>Correo</th>
+                    <th>Creador</th>
+                    
+                    <th>Detalles</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.usuario }}</td>
+                    <td>{{ user.tipo }}</td>
+                    <td>{{ user.correo}}</td>
+                    <td>{{ user.user.username }}</td>
+                    <td><a href="{% url 'user_detail' user.id %}">Detalles</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+-->
+    
+    <div class="table-responsive rounded">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Super usuario</th>
+                    <th>Es gerente</th>
+                    <th>Esta activo</th>
+                    <th>Creado </th>
+                    <th>Ultimo inicio de sesion</th>
+                    <!--
+                    <th>Detalles</th>
+                    -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in usr %}
+                <tr>
+                    <td>{{ a.username }}</td>
+                    <td>{{ a.is_superuser}}</td>
+                    <td>{{ a.is_staff}}</td>
+                    <td>{{ a.is_active}}</td>
+                    <td>{{ a.date_joined}}</td>
+                    <td>{{ a.last_login}}</td>
+                    <!--
+                    <td><a href="{% url 'user_detail' user.id %}">Detalles</a></td>
+              -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+
+    
+</main>
+{% endblock %}
+
+</body>
+<style>
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+        background-color: #f8f9fa;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .rounded {
+        border-radius: 1em; /* Ajusta el valor según el grado de ovalado que desees */
+        overflow: hidden;
+    }
+
+    body {
+        background-image: url('https://www.obsbusiness.school/sites/obsbusiness.school/files/inline-images/importancia-trabajo-en-equipo.jpg');
+        background-size: cover;
+    }
+</style>
+
+

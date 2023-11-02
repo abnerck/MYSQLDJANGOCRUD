@@ -1,0 +1,88 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+    
+
+    <div class="container">
+        <div class="form-container">
+            <h1>Crear Proveedores</h1>
+
+            {{ error }}
+            <form action="/proveedores/create/" method="post">
+                {% csrf_token %}
+        
+                <label for="id_nombre" class="form-label">Nombre:</label>
+                <input type="text" name="nombre" maxlength="100" id="id_nombre" class="form-control">
+           
+                <label for="id_correo" class="form-label">Correo:</label>
+                <input class="form-control" type="email" name="correo" maxlength="254" id="id_correo">
+             
+                <label class="form-label" for="id_telefono">Telefono:</label>
+                <input class="form-control" type="text" name="telefono" maxlength="100" id="id_telefono">
+
+                <label for="productos" class="form-label">Productos:</label>
+                <input type="text" name="productos" maxlength="100" id="productos" class="form-control">
+           
+                
+                <label for="id_estadodelprovedor" class="form-label">Estado del proveedor:</label>
+                <textarea name="estadodelprovedor" class="form-control" cols="40" rows="4" id="id_estadodelprovedor">
+            </textarea>
+            <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+            </form>
+    
+    <style>
+
+
+body {
+    font-family: Arial, sans-serif; /* Fuente predeterminada para el cuerpo */
+    background-color: #d3d8c8; /* Color de fondo del cuerpo */
+    margin: 0; /* Elimina los márgenes predeterminados */
+    padding: 0; /* Elimina el relleno predeterminado */
+}
+
+        .form-container {
+            background-color: #f8f9fa; /* Color de fondo */
+            padding: 20px;
+            border: 1px solid #dee2e6; /* Borde del formulario */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto; /* Centra el formulario horizontalmente */
+        }
+    
+        .form-label {
+            font-weight: bold; /* Estilo de etiquetas en negrita */
+        }
+    
+        .form-control {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da; /* Borde de campos de entrada */
+            border-radius: 5px;
+        }
+    
+        .form-check-input {
+            margin-right: 10px;
+        }
+    
+        .btn {
+            background-color: #007bff; /* Color de fondo del botón */
+            color: #fff; /* Color del texto del botón */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .btn:hover {
+            background-color: #0056b3; /* Color de fondo al pasar el cursor sobre el botón */
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        
+    </style>
+</body>
+    
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ error }}
+<body>
+    <div class="container mt-4">
+        <a href="/opiniones/" class="text-dark text-decoration-none"><h1 >Opiniones</h1></a>
+
+<a href="{% url 'create_opinion' %}" class="btn btn-danger mt-3">Crear nueva Opinion</a>
+
+
+    </div>
+    
+<div class="container mt-4">
+    
+    <h2 class="text-center">Lista de Opiniones</h2>
+
+    <div class="table-responsive rounded">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Correo</th>
+                    <th>usuario</th>
+                    <th>calificacion</th>
+                    <th>Fecha</th>
+                    {% if user.is_superuser or user.is_staff %}
+                    <th>Detalle</th>
+                    {% endif %}
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for opinion in opiniones %}
+                <tr>
+                    <td>{{ opinion.Correo }}</td>                   
+                    <td>{{ opinion.user.username}}</td>
+                    <td>{{ opinion.calificacion}}</td>
+                    <td>{{ opinion.FechaRegistro}}</td>
+                    {% if user.is_superuser or user.is_staff %}
+                    <td><a href="{% url 'opinion_detail' opinion.id %}" >Detalles</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+
+<style>
+    body {
+        background-color: bisque;
+        background-size: cover;
+    }
+</style>
+
+{% endblock %}

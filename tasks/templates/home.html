@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/tasks/templates/Fondo.jpg">
+</head>
+
+<body>
+    <main class="container py-5">
+        <center>
+            <!-- Título "Personalizarte Imprenta" con el mismo estilo -->
+            <div class="feature-box">
+                <h1>Personalizarte Imprenta</h1>
+            </div>
+        </center>
+
+        <!-- Sección "Nosotros" -->
+        <section class="container my-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-box dark-bg">
+                        <h2>Nosotros</h2>
+                        <p>Somos una empresa comprometida con la calidad y la creatividad en cada proyecto de impresión.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box dark-bg">
+                        <h2>Misión</h2>
+                        <p>Nuestra misión es proporcionar soluciones de impresión excepcionales a nuestros clientes, superando sus expectativas y entregando resultados de alta calidad.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box dark-bg">
+                        <h2>Visión</h2>
+                        <p>Nuestra visión es convertirnos en líderes en la industria de la impresión, innovando constantemente y brindando servicios de clase mundial.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+   
+    <style>
+        body{
+            background-color: aqua;
+        }
+        /* Estilos para la sección "Nosotros" con fondo oscuro y texto claro */
+        .feature-box {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+    
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* Estilo para el título "Personalizarte Imprenta" */
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: aquamarine;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+    
+        h2 {
+            font-family: 'Pacifico', cursive;
+            color: aquamarine;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+    
+        p {
+            font-size: 18px;
+        }
+    </style>
+
+</body>
+
+{% endblock %}

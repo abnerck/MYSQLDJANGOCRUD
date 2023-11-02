@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+
+
+    <div class="container">
+        <div class="form-container">
+            <h1>Crear Productos</h1>
+            {{ error }}
+            <form action="/productos/create/" method="post">
+                {% csrf_token %}
+
+                <label for="id_nombre" class="form-label">Nombre:</label>
+                <input type="text" name="nombre" maxlength="50" required id="id_nombre" class="form-control">
+
+
+                <label for="id_descripcion" class="form-label">Descripcion:</label>
+                <input type="text" name="descripcion" maxlength="50" required id="id_descripcion" class="form-control">
+
+                <label for="id_categoria" class="form-label">Categoria:</label>
+                <input type="text" name="categoria" maxlength="50" required id="id_categoria" class="form-control">
+
+                <label for="id_precioComun" class="form-label">Precio Comun:</label>
+                <input type="number" name="precioComun" id="id_precioComun" class="form-control">
+
+                <label for="id_precioMayoreo" class="form-label">Precio mayoreo:</label>
+                <input type="number" name="precioMayoreo" id="id_precioMayoreo" class="form-control">
+
+                <label for="id_canStock" class="form-label">Cantidad en stock:</label>
+                <input type="number" name="canStock" id="id_canStock" class="form-control">
+
+                <label for="id_tamaño" class="form-label">Tamaño:</label>
+                <input type="text" name="tamaño" maxlength="50" id="id_tamaño" class="form-control">
+
+                <label for="id_material" class="form-label">Material:</label>
+                <input type="text" name="material" maxlength="50" id="id_material" class="form-control">
+
+                <label for="id_tiempodeProduccion" class="form-label">Tiempo de produccion:</label>
+                <input type="text" name="tiempodeProduccion" id="id_tiempodeProduccion" class="form-control">
+
+                <label for="id_estado" class="form-label">Estado:</label>
+                <select name="estado" id="id_estado" class="form-select">
+
+
+                    <option value="Activo">Activo</option>
+
+                    <option value="Desactivado">Desactivado</option>
+
+                </select>
+
+                
+                <label for="id_idProveedor" class="form-label">Proveedor:</label>
+                    <select name="idProveedor" id="id_idProveedor" class="form-select">
+                    {% for proveedor in provedores %}
+                    <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+                    {% endfor %}
+                </select>
+
+                
+                <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+            </form>
+
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    /* Fuente predeterminada para el cuerpo */
+                    background-color: #d3d8c8;
+                    /* Color de fondo del cuerpo */
+                    margin: 0;
+                    /* Elimina los márgenes predeterminados */
+                    padding: 0;
+                    /* Elimina el relleno predeterminado */
+                }
+
+                .form-container {
+                    background-color: #f8f9fa;
+                    /* Color de fondo */
+                    padding: 20px;
+                    border: 1px solid #dee2e6;
+                    /* Borde del formulario */
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    max-width: 400px;
+                    margin: 0 auto;
+                    /* Centra el formulario horizontalmente */
+                }
+
+                .form-label {
+                    font-weight: bold;
+                    /* Estilo de etiquetas en negrita */
+                }
+
+                .form-control {
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    border: 1px solid #ced4da;
+                    /* Borde de campos de entrada */
+                    border-radius: 5px;
+                }
+
+                .form-check-input {
+                    margin-right: 10px;
+                }
+
+                .btn {
+                    background-color: #007bff;
+                    /* Color de fondo del botón */
+                    color: #fff;
+                    /* Color del texto del botón */
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+
+                .btn:hover {
+                    background-color: #0056b3;
+                    /* Color de fondo al pasar el cursor sobre el botón */
+                }
+
+                .form-container {
+                    margin-top: 20px;
+                }
+            </style>
+</body>
+
+{% endblock %}

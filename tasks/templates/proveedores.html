@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{error}}
+<body>
+    <div class="container mt-4">
+
+        <a href="/proveedores/" class="text-dark text-decoration-none"><h1>Proveedores</h1></a>
+        {% if user.is_superuser or user.is_staff %}
+    <a href="/proveedores/create/" class="btn btn-danger mt-3">Agregar Proveedor</a>
+    {% endif %}
+    </div>
+    
+    <main class="container">
+        <div class="table-responsive rounded">
+            <center> <h1>Lista de Proveedores</h1> </center>
+            <table class="table table-bordered table-striped rounded">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        
+                        <th>Telefono</th>
+                        <th>Creador</th>
+                        {% if user.is_superuser or user.is_staff %}
+                        <th>Detalles </th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proveedor in proveedores %}
+                    <tr>
+                        <td>{{ proveedor.nombre }}</td>
+                        <td>{{ proveedor.correo }}</td>
+                        <td>{{ proveedor.telefono }}</td>
+                        <td>{{ proveedor.user.username }}</td>      
+                        {% if user.is_superuser or user.is_staff %}              
+                        <td><a href="{% url 'proveedor_detail' proveedor.id %}">Detalles</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+<style>
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+        background-color: #f8f9fa;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .rounded {
+        border-radius: 1em; /* Ajusta el valor según el grado de ovalado que desees */
+        overflow: hidden;
+    }
+    body {
+        background-color: aqua;
+        background-size: cover;
+    }
+</style>
+{% endblock %}
