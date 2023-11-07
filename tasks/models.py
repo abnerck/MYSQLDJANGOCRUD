@@ -68,11 +68,12 @@ class Task(models.Model):
 
 
 class Proveedor(models.Model):
+
     nombre = models.CharField(blank=True,null=True,max_length=100)
     correo = models.EmailField(blank=True,null=True)
     telefono = models.CharField(blank=True,null=True,max_length=100)
     estadodelprovedor = models.TextField(blank=True,null=True)
-    productos = models.CharField(blank=True,null=True,max_length=100)
+    #productos = models.CharField(blank=True,null=True,max_length=100)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
 
@@ -131,12 +132,16 @@ class Cliente(models.Model):
     tipocliente = models.CharField(max_length=100, blank=True, null=True, choices=ESTADO_CHOICES)
     direccion = models.CharField(max_length=100,blank=True,null=True)
     fecharegistro = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+        
     fechanacimiento = models.DateField( blank=True, null=True)
+
     correo = models.EmailField( blank=True, null=True)
     celular = models.CharField(max_length=100, blank=True, null=True)
     
     referencias = models.CharField(max_length=50, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
+    
+    
 
     def __str__(self):
         return self.nombre
@@ -275,7 +280,8 @@ class Compra(models.Model):
     def save(self, *args, **kwargs):
 
         #precioMayoreo
-        a = self.totalCompra = self.cantidad * self.idProducto.precioMayoreo
+        self.totalCompra = self.cantidad * self.idProducto.precioMayoreo
+        a = self.totalCompra
         
         self.idProducto.canStock = self.idProducto.canStock + self.cantidad
 
@@ -299,6 +305,7 @@ class Ticket(models.Model):
 
 
 class IncidenteLaboral(models.Model):
+
     horaIncidente = models.TimeField(blank=True,null=True)
     descripcion = models.CharField(max_length=100,blank=True,null=True)
     

@@ -8,13 +8,25 @@
     <a href="/mantenimiento/" class="text-dark text-decoration-none"><h1>Mantenimientos</h1></a>
     <a href="{% url 'create_mantenimiento' %}" class="btn btn-danger mt-3">Crear nuevo Mantenimiento</a>
     {% if user.is_superuser or user.is_staff %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
     <!-- Agregar campos de búsqueda -->
     <div class="mb-3">
         <label for="filtroMantenimiento" class="form-label">Buscar por Mantenimiento:</label>
         <input type="text" class="form-control" id="filtroMantenimiento">
     </div>
     <div class="mb-3">
-        <label for="filtroResponsable" class="form-label">Buscar por Responsable:</label>
+        <label for "filtroResponsable" class="form-label">Buscar por Responsable:</label>
         <input type="text" class="form-control" id="filtroResponsable">
     </div>
 
@@ -40,15 +52,15 @@
                         className: 'btn-pdf', // Agregar esta clase para el botón de PDF
                         customize: function (doc) {
                             var totalCostos = calcularTotalCostos();
-    
+
                             // Agregar la imagen y otros elementos personalizados al PDF...
-    
+
                             doc.content.push({
                                 text: 'Total de Costos Filtrados: $' + totalCostos,
                                 margin: [0, 0, 20, 0],
                                 alignment: 'right'
                             });
-    
+
                             // Más código personalizado...
                         },
                         exportOptions: {
@@ -58,18 +70,16 @@
                 ],
                 select: true
             });
-    
+
             $('#filtroMantenimiento, #filtroResponsable').on('keyup', function () {
                 table
                     .columns(4)
                     .search($('#filtroMantenimiento').val())
-                    .columns(1)
+                    .columns(3)
                     .search($('#filtroResponsable').val())
                     .draw();
             });
-    
-            
-    
+
             function calcularTotalCostos() {
                 var totalCostos = 0;
                 table.rows({ search: 'applied' }).data().each(function (value, index) {
@@ -78,15 +88,11 @@
                 return totalCostos.toFixed(2);
             }
         });
-    
+
         // ESTE CODIGO ESTA BIEN
-    
-        
     </script>
-    
 
     {% endif %}
-    
 
     <div class="table-responsive rounded">
         <center><h1>Lista Mantenimiento</h1></center>
@@ -121,8 +127,6 @@
     </div>
     <canvas id="graficaMantenimientos" width="400" height="200"></canvas>
 </div>
-
-
 </body>
 
 <style>
@@ -151,18 +155,6 @@
     }
 </style>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 
 
 {% endblock %}

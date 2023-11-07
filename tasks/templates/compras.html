@@ -2,6 +2,13 @@
 
 {% block content %}
 {{error}}
+
+
+<head>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
 <body>
     <div  class="container mt-4">
         <a href="/compras/"class="text-dark text-decoration-none"><h1>Compras</h1></a>
@@ -50,12 +57,16 @@
                         <td>{{ compra.fechaCompra }}</td>
                         
                         
-                        <td>{{ user.username }}</td>                    
+                        <td>{{ compra.user.username }}</td>                    
                         <td><a href="{% url 'compra_detail' compra.id %}">Detalles</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            {% if user.is_superuser %}
+            <canvas id="graficaCompras" width="400" height="200"></canvas>
+            {% endif %}
+
         </div>
     </div>
     
@@ -93,7 +104,7 @@
         overflow: hidden;
     }
     body {
-        background-color: rgb(167, 151, 227);
+        background-color: rgb(255, 255, 255);
         background-size: cover;
     }
     
@@ -165,9 +176,9 @@
 
         $('#filtroProveedor, #filtroEmpleado').on('keyup', function () {
             table
-                .columns(1)
+                .columns(3)
                 .search($('#filtroProveedor').val())
-                .columns(2)
+                .columns(5)
                 .search($('#filtroEmpleado').val())
                 .draw();
         });
@@ -183,6 +194,37 @@
     });
 
     // ESTE CODIGO ESTA BIEN
+    document.addEventListener('DOMContentLoaded', function () {
+    var ctx = document.getElementById('graficaCompras').getContext('2d');
+
+    var data = {
+      labels: [{% for compra in compras %}"{{ compra.idProducto }}",{% endfor %}],
+      datasets: [{
+        label: 'Total compras',
+        data: [{% for compra in compras %}{{ compra.totalCompra }},{% endfor %}],
+        backgroundColor: 'rgba(0)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
+    };
+
+    var options = {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    };
+
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: options
+    });
+  });
+
+  
+
 </script>
 
 {% endblock %}

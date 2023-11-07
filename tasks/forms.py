@@ -139,7 +139,7 @@ class IncidentesLaboralesForm(ModelForm):
             'descripcion':'Descripcion',
             'reportadopor':'Reportado Por',
             'tipoIncidente':'Tipo Incidente',
-            'accionesCorrectivas':'Acciones',
+            'accionesCorrectivas':'Acciones correctivas',
             'comentarios':'Comentarios'
         }
 
@@ -177,7 +177,8 @@ class ProveedorForm(ModelForm):
     class Meta:
         model = Proveedor
 
-        fields = ['nombre','correo','telefono','estadodelprovedor','productos',]
+        #fields = ['nombre','correo','telefono','estadodelprovedor','productos',]
+        fields = ['nombre','correo','telefono','estadodelprovedor',]
         labels = {
             'nombre':'Nombre',
             'correo':'Correo',

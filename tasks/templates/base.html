@@ -77,10 +77,11 @@
                             {% endif %}
 
 
-
+                            <!--
                             <li class="nav-item">
                                 <a href="/tickets" class="nav-link">Tickets</a>
                             </li>
+                            -->
                             <li class="nav-item">
                                 <a href="/opiniones" class="nav-link">Opiniones</a>
                             </li>
@@ -90,23 +91,30 @@
                             <li class="nav-item">
                                 <a href="/proveedores" class="nav-link">Proveedores</a>
                             </li>
-
-                            <li class="nav-item">
-                                <a href="/incidenteslaborales" class="nav-link">Incidente Laboral</a>
-                            </li>
                             {% if user.is_superuser and user.is_staff %}
                             <li class="nav-item">
-                                <a href="/productos" class="nav-link"><i class="fa-solid fa-file-pdf"
+                                <a href="/incidenteslaborales" class="nav-link">
+                                    <i class="fa-solid fa-file-pdf"
+                                        style="color: #00060f;"></i>
+                                    Incidente Laboral</a>
+                                
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a href="/productos" class="nav-link">
+                                    <i class="fa-solid fa-file-pdf"
                                         style="color: #00060f;"></i>Productos</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/servicio" class="nav-link"><i class="fa-solid fa-file-pdf"
                                         style="color: #00060f;"></i>Servicios</a>
                             </li>
+                            <!--
                             <li class="nav-item">
                                 <a href="/ordenes" class="nav-link"><i class="fa-solid fa-file-pdf"
                                         style="color: #00060f;"></i>Ordenes </a>
                             </li>
+                            -->
                             <li class="nav-item">
                                 <a href="/ventas" class="nav-link"> <i class="fa-solid fa-file-pdf"
                                         style="color: #00060f;"></i>Ventas </a>
@@ -127,9 +135,11 @@
                             <li class="nav-item">
                                 <a href="/servicio" class="nav-link">Servicios</a>
                             </li>
+                            <!--
                             <li class="nav-item">
                                 <a href="/ordenes" class="nav-link">Ordenes </a>
                             </li>
+                            -->
                             <li class="nav-item">
                                 <a href="/ventas" class="nav-link"> Ventas </a>
                             </li>
@@ -177,14 +187,14 @@
                                         class="fa-solid fa-right-from-bracket" style="color: #000102;"></i> </a>
                             </li>
                         </ul>
-                        
+
                         {% if user.is_superuser %}
-                        
+
                     <li class="nav-item dropdown">
-                        {% if newproduct > 0 or newventa > 0 %}
+                        {% if newproduct > 0 or newventa > 0 or hbd > 0%}
                         <audio autoplay>
                             <source src="" type="audio/mpeg">
-                            
+
                         </audio>
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -195,27 +205,36 @@
                             </svg>1
                         </a>
                         {% endif %}
-                        
+
                         <ul class="dropdown-menu">
-                            
+
                             <li class="nav-item">
                                 {% if newproduct > 0 %}
                                 <a href="/productos" style="text-decoration: none;">Se han registrado {{newproduct}}
                                     productos</a>
-                                    
-                                {% else %}        
+
+                                {% else %}
                                 <as tyle="text-decoration: none;">No hay notificaciones Productos
-                                {% endif %}
+                                    {% endif %}
 
                                     <br>
-                                {% if newventa > 0 %}
-                                <a href="/ventas" style="text-decoration: none;">Se han registrado {{newventa}}
-                                    ventas</a>
-                                    
-                                {% else %}        
-                                <as tyle="text-decoration: none;">No hay notificaciones ventas
-                                {% endif %}
+                                    {% if newventa > 0 %}
+                                    <a href="/ventas" style="text-decoration: none;">Se han registrado {{newventa}}
+                                        ventas</a>
 
+                                    {% else %}
+                                    <as tyle="text-decoration: none;">No hay notificaciones ventas
+                                        {% endif %}
+                                        <br>
+                            <li class="nav-item">
+                                {% if hbd > 0 %}
+                                <a href="/clientes" style="text-decoration: none;"> {{hbd}} Clientes cumplen años!!!</a>
+
+                                {% else %}
+                                <as tyle="text-decoration: none;">No hay clientes con cumpleaños
+                                    {% endif %}
+
+                                    <br>
 
                             </li>
 

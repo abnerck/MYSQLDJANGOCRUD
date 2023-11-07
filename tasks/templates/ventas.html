@@ -2,6 +2,10 @@
 
 {% block content %}
 {{error}}
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
 
 <body>
 
@@ -63,8 +67,14 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% if user.is_superuser %}
+            <canvas id="graficaVentas" width="400" height="200"></canvas>
+            {% endif %}
         </div>
     </div>
+
+    
+
 
 </body>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
@@ -93,7 +103,7 @@
 
     body {
         /*background-image: url('https://cecytebcs.edu.mx/wp-content/uploads/2022/02/ventas.jpg');*/
-        background-color: rgb(158, 167, 238);
+        background-color: rgb(104, 34, 202)8)
         background-size: cover;
     }
 
@@ -162,9 +172,9 @@
 
         $('#filtroCliente, #filtroEmpleado').on('keyup', function () {
             table
-                .columns(2)
-                .search($('#filtroCliente').val())
                 .columns(3)
+                .search($('#filtroCliente').val())
+                .columns(6)
                 .search($('#filtroEmpleado').val())
                 .draw();
         });
@@ -177,10 +187,34 @@
             return totalVentas.toFixed(2);
         }
     });
+    document.addEventListener('DOMContentLoaded', function () {
+    var ctx = document.getElementById('graficaVentas').getContext('2d');
+
+    var data = {
+      labels: [{% for venta in ventas %}"{{ venta.idCliente }}",{% endfor %}],
+      datasets: [{
+        label: 'Total Venta',
+        data: [{% for venta in ventas %}{{ venta.totalVenta }},{% endfor %}],
+        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo más oscuro
+        borderColor: 'rgba(54, 162, 235, 1)', // Borde de las barras más oscuro
+        borderWidth: 1
+      }]
+    };
+
+    var options = {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    };
+
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: options
+    });
+  });
 </script>
 
-
-
-
-</script>
 {% endblock %}

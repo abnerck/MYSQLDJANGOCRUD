@@ -24,9 +24,33 @@ class Command(BaseCommand):
         else:
             # Si no se proporciona la opción --cargar, realizar un respaldo
             self.respaldar_bd()
-
+            
+            
+            
+            # SI HACE EL RESPALDO PERO EN ZIP
     def respaldar_bd(self):
-        # El código para realizar un respaldo (como se hacía antes)
+        # Directorio donde se almacenarán los respaldos
+        backup_dir = 'backups/'
+
+        # Asegúrate de que el directorio de respaldo exista, si no, créalo
+        if not os.path.exists(backup_dir):
+            os.makedirs(backup_dir)
+
+        # Genera un nombre de archivo para el respaldo basado en la fecha y hora actual
+        timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+        backup_file = os.path.join(backup_dir, f'backup_{timestamp}.sqlite3')
+
+        # Ubicación de la base de datos actual
+        db_file = 'db.sqlite3'
+
+        try:
+            # Copia la base de datos actual al archivo de respaldo
+            shutil.copy(db_file, backup_file)
+
+            self.stdout.write(self.style.SUCCESS(f'Respaldo de la base de datos exitoso: {backup_file}'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Error al realizar el respaldo de la base de datos: {str(e)}'))
+
 
     def cargar_bd(self):
         # Directorio donde se almacenan los respaldos

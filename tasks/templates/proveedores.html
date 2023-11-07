@@ -14,10 +14,11 @@
     <main class="container">
         <div class="table-responsive rounded">
             <center> <h1>Lista de Proveedores</h1> </center>
-            <table class="table table-bordered table-striped rounded">
+            <table id="tablaProveedores" class="table table-bordered table-striped rounded">
                 <thead class="thead-dark">
                     <tr>
                         <th>Nombre</th>
+                        <th>Estado</th>
                         <th>Correo</th>
                         
                         <th>Telefono</th>
@@ -31,6 +32,7 @@
                     {% for proveedor in proveedores %}
                     <tr>
                         <td>{{ proveedor.nombre }}</td>
+                        <td>{{ proveedor.estadodelprovedor }}</td>
                         <td>{{ proveedor.correo }}</td>
                         <td>{{ proveedor.telefono }}</td>
                         <td>{{ proveedor.user.username }}</td>      
@@ -78,4 +80,7 @@
         background-size: cover;
     }
 </style>
+
+
+
 {% endblock %}

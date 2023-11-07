@@ -28,34 +28,102 @@ from .forms import RestoreForm  # Asegúrate de importar el formulario
 
 from django.utils import timezone
 from datetime import timedelta
+from datetime import datetime
+ 
+from datetime import datetime
 
- 
- 
+from datetime import datetime
+
+from datetime import datetime
+from tasks.models import Cliente
+
+# GRAFICA DE BARRAS
+from collections import defaultdict
+
+
+
+
 def nosotros(request):
     return render(request, 'nosotros.html')
+
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 
 def home(request):
     cutoff_date = timezone.now() - timedelta(minutes=1)
 
     #total = Usuario.objects.filter(date_joined__gte=cutoff_date).count()
     #total = Usuario.objects.filter(tipo='Administrador').count()
-    usr = Usuario.objects.latest('date_joined')
+    usr = Usuario.objects.latest('date_joined')   
+
     newproduct = Producto.objects.filter(visto=False).count()
     newventa = Venta.objects.filter(visto=False).count()
     
+    current_date = datetime.now().date()
+    b = Cliente.objects.filter(fechanacimiento='2023-11-03').count()
+  
 
-    print(newproduct)
-    print(newventa)
-    
+    # Obtén la fecha actual
+    current_date = datetime.now().date()
+
+
+
+    current_month = datetime.now().month
+    current_day = datetime.now().day
+
+    # Realiza la consulta para filtrar los objetos Cliente cuya fecha de nacimiento coincide con el mes y el día actual
+    clientes_cumple = Cliente.objects.filter(fechanacimiento__month=current_month, fechanacimiento__day=current_day)
+
+    hbd = clientes_cumple.count()  # Esta línea cuenta y muestra el número de clientes.
+
+    print(hbd)
+
+    # Configura el mensaje de correo
+    subject = "¡Feliz Cumpleaños!"
+    message = "¡Feliz Cumpleaños! Te deseamos un día lleno de alegría y felicidad."
+    from_email = 'maao202378@upemor.edu.mx'  # Tu dirección de correo electrónico
+
+    # Conecta al servidor SMTP y envía el correo
+    try:
+        # Utiliza la configuración de settings.py para el servidor SMTP
+        smtp_server = 'smtp.gmail.com'  # Servidor SMTP de Gmail
+        smtp_port = 587  # Puerto de SMTP de Gmail
+        smtp_username = 'maao202378@upemor.edu.mx'  # Tu dirección de correo electrónico
+        smtp_password = 'Guapango0212'  # Tu contraseña de correo electrónico
+
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(smtp_username, smtp_password)
+
+        # Envía el correo a cada cliente que cumple años
+        for cliente in clientes_cumple:
+            to_email = cliente.correo  # Reemplaza 'email' con el campo real que almacena la dirección de correo del cliente
+
+            msg = MIMEMultipart()
+            msg['From'] = from_email
+            msg['To'] = to_email
+            msg['Subject'] = subject
+            msg.attach(MIMEText(message, 'plain'))
+
+            server.sendmail(from_email, to_email, msg.as_string())
+            print(f"Correo enviado a {to_email}")
+
+        server.quit()
+    except Exception as e:
+        print(f"Error al enviar correo: {str(e)}")
+
     #print(usr)
     return render(request, 'home.html',{
         #'total':total,
         'usr':usr,
         'newproduct':newproduct,
-        'newventa':newventa
+        'newventa':newventa,
+        'hbd':hbd
         
     })
-
 
 
 
@@ -670,9 +738,11 @@ def create_detalleventa(request):
             
 @login_required
 def compras(request):
+    
+
     if request.user.is_superuser:
         compras = Compra.objects.all()
-        print(request.user)
+        
     else:
         compras = Compra.objects.filter(user=request.user)
 
@@ -1228,17 +1298,19 @@ def mantenimiento_detail(request, mantenimiento_id):
     })
 
 
-
 def backup_database(request):
-    # Ejecuta el comando de respaldo
-    result = os.system('python manage.py backup_db')
-    if result == 0:
-        message = 'Respaldo exitoso.'
+    if request.method == 'POST':
+        # Ejecuta el comando de respaldo
+        result = os.system('python manage.py backup_db')
+        if result == 0:
+            message = 'Respaldo exitoso.'
+            respaldo_exitoso = True
+        else:
+            message = 'Error al realizar el respaldo.'
     else:
-        message = 'Error al realizar el respaldo.'
+        message = ''
 
     return render(request, 'respaldo.html', {'message': message})
-
 
 
 
@@ -1280,6 +1352,8 @@ from django.contrib.auth.views import PasswordResetView
 
 def password_reset_view(request):
     return PasswordResetView.as_view()(request)
+
+
 
 
 
