@@ -7,7 +7,7 @@
 
     <div class="container">
         <div class="form-container">
-            <h2>Registrar Herramienta</h2>
+            <h2>Registrar herramienta</h2>
 
             {{ error }}
 
@@ -16,8 +16,8 @@
         
                 
         
-                <label for="id_nombreHerramienta" class="form-label">Nombre Herramienta:</label>
-                <input type="text" name="nombreHerramienta" maxlength="100" id="id_nombreHerramienta" class="form-control">
+                <label for="id_nombreHerramienta" class="form-label">Nombre herramienta:</label>
+                <input type="text" name="nombreHerramienta" maxlength="100" id="id_nombreHerramienta" class="form-control" required>
                 
                 
               
@@ -25,9 +25,10 @@
               
               
                 <label for="id_tipo" class="form-label">Tipo:</label>
-                <select name="tipo" id="id_tipo" class="form-select">
+                <select name="tipo" id="id_tipo" class="form-select" required>
               
-            
+                    <option value="Seleccione">Seleccione</option> 
+
               <option value="Computadora">Computadora</option>
             
               <option value="Router">Router</option>
@@ -42,15 +43,32 @@
               
               
                 <label for="id_marca" class="form-label">Marca:</label>
-                <input type="text" name="marca" maxlength="100" id="id_marca" class="form-control">
+                <input type="text" name="marca" maxlength="100" id="id_marca" class="form-control" required>
                 
                 
               
             
               
-              
-                <label for="id_fechaAdquisicion" class="form-label">Fecha Adquisicion:</label>
-                <input type="date" class="form-control" name="fechaAdquisicion" id="id_fechaAdquisicion">
+
+                <label for="fechaAdquisicion" class="form-label">Fecha de adquisición</label>
+<input type="date" name="fechaAdquisicion" class="form-control" id="fechaAdquisicion" required oninput="validarFechaNacimiento()">
+
+<script>
+function validarFechaNacimiento() {
+    // Obtener la fecha actual
+    var fechaActual = new Date();
+
+    // Obtener la fecha de nacimiento ingresada
+    var fechaAdquisicion = new Date(document.getElementById('fechaAdquisicion').value);
+
+    // Comparar las fechas
+    if (fechaAdquisicion > fechaActual) {
+        alert('La fecha de nacimiento no puede ser mayor que la fecha actual.');
+        // Puedes agregar más lógica aquí, como limpiar el campo o deshabilitar el botón de envío.
+    }
+}
+</script>
+
                 
                 
               
@@ -58,7 +76,7 @@
               
               
                 <label for="id_idProveedor" class="form-label">Proveedor:</label>
-                <select name="idProveedor" id="id_idProveedor" class="form-select">
+                <select name="idProveedor" id="id_idProveedor" class="form-select" required>
               
             
               <option value="4">RONALDO</option>
@@ -70,26 +88,27 @@
                 
               
             
+                    
+                    <label for="estadoHerramienta" class="form-label">Estado herramienta:</label>
+                        <select name="estadoHerramienta" id="estadoHerramienta" class="form-select" required>
+                    
+                            <option value="Seleccione">Seleccione</option>
+
+                    <option value="Activo">Activo</option>
+                    
+                    <option value="Inactivo">Inactivo</option>
+                                       
+                    </select>
+                    
               
               
-                <label for="id_estadoHerramienta" class="form-label">Estado de la Herramienta:</label>
-                <input type="text" name="estadoHerramienta" maxlength="100" id="id_estadoHerramienta" class="form-control">
-                
-                
-              
-            
-              
-              
-                <label for="id_valor" class="form-label">Valor:</label>
-                <input type="number" name="valor" id="id_valor" class="form-control">
-                
-                
-              
-            
+                    <label for="id_valor" class="form-label">Valor:</label>
+                    <input type="number" name="valor" id="id_valor" class="form-control" min="0" step="0.01" required>
+                    
               
               
                 <label for="id_notas" class="form-label">Notas:</label>
-                <textarea name="notas" cols="40" rows="4" id="id_notas" class="form-control">
+                <textarea name="notas" cols="40" rows="4" id="id_notas" class="form-control" required>
             </textarea>
                 
                 

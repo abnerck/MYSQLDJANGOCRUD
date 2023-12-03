@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -106,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -118,7 +119,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+'''STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'tasks', 'static'),
+]
+
+'''
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATIC_URL = '/static/'
+
+# Directorios adicionales para archivos estáticos
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'tasks', 'static'),
+]
+
+# Directorio donde se recopilan los archivos estáticos
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+
+
 
 LOGIN_URL = '/signin'
 
@@ -134,3 +154,11 @@ EMAIL_USE_TLS = True  # Utiliza TLS para conexiones seguras
 EMAIL_HOST_USER = 'maao202378@upemor.edu.mx'  # Tu dirección de correo electrónico de Gmail
 EMAIL_HOST_PASSWORD = 'Guapango0212'  # La contraseña de tu correo electrónico de Gmail
 
+
+
+
+# Establece el tiempo de inactividad en 15 minutos (15 minutos x 60 segundos por minuto)
+SESSION_COOKIE_AGE = 900
+
+# La sesión expirará cuando el usuario cierre el navegador
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

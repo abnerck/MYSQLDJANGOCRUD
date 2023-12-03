@@ -14,13 +14,13 @@
                 {% csrf_token %}
         
                 <label for="id_nombre" class="form-label">Nombre:</label>
-                <input type="text" name="nombre" maxlength="100" id="id_nombre" class="form-control">
+                <input type="text" name="nombre" maxlength="50" id="id_nombre" class="form-control" required>
            
                 <label for="id_correo" class="form-label">Correo:</label>
-                <input class="form-control" type="email" name="correo" maxlength="254" id="id_correo">
+                <input class="form-control" type="email" name="correo" maxlength="254" id="id_correo" required>
              
-                <label class="form-label" for="id_telefono">Telefono:</label>
-                <input class="form-control" type="text" name="telefono" maxlength="100" id="id_telefono">
+                <label class="form-label" for="id_telefono">Teléfono:</label>
+                <input class="form-control" type="text" name="telefono" maxlength="10" id="id_telefono"  required>
 
                 <!--
                 <label for="productos" class="form-label">Productos:</label>
@@ -31,7 +31,7 @@
 
 
                     <label for="id_estadodelprovedor" class="form-label">Estado:</label>
-                <select name="estadodelprovedor" id="id_estadodelprovedor" class="form-select">
+                <select name="estadodelprovedor" id="id_estadodelprovedor" class="form-select" required>
 
                     
                     <option value="25">selecciona</option>

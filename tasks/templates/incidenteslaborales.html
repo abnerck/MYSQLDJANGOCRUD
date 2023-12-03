@@ -5,13 +5,13 @@
 <body>
 
 <div class="container mt-4">
-    <a href="/incidenteslaborales/" class="text-dark text-decoration-none"><h1>Incidentes Laborales</h1></a>
-    <a href="/incidenteslaborales/create/" class="btn btn-danger mt-3">Agregar Incidente Laboral</a>
+    <a href="/incidenteslaborales/" class="text-dark text-decoration-none"><h1>Incidentes laborales</h1></a>
+    <a href="/incidenteslaborales/create/" class="btn btn-danger mt-3">Agregar incidente laboral</a>
     {% if user.is_superuser or user.is_staff %}
 
     <style>
         body {
-            background-color: bisque;
+            background-color: rgb(221, 135, 29);
             background-size: cover;
         }
     
@@ -23,6 +23,10 @@
         .btn-pdf {
             background-color: red !important;
             color: white !important;
+        }
+        #tablaIncidentesLaborales_filter input[type="search"] {
+            background-color: white;
+            color: black;
         }
     </style>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
@@ -43,7 +47,7 @@
         <input type="text" class="form-control" id="filtroHora">
     </div>
     <div class="mb-3">
-        <label for="filtroTipoIncidente" class="form-label">Filtrar por Tipo de Incidente:</label>
+        <label for="filtroTipoIncidente" class="form-label">Filtrar por tipo de incidente:</label>
         <input type="text" class="form-control" id="filtroTipoIncidente">
     </div>
 
@@ -68,7 +72,13 @@
                         title: 'Lista de Incidentes Laborales',
                         className: 'btn-pdf',
                         customize: function (doc) {
-                            // Personaliza el PDF si es necesario
+                            var totalCostos = calcularTotalCostos();
+                            doc.content.push({
+                            
+                            text:'\nTotal de incidentes internos:'+totalCostos,
+                            margin: [0, 0, 20, 0],
+                            alignment: 'left'
+                        });
                         },
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4]
@@ -86,12 +96,22 @@
                     .search($('#filtroTipoIncidente').val())
                     .draw();
             });
+            function calcularTotalCostos() {
+            var totalCostos = 0;
+            table.rows({ search: 'applied' }).data().each(function (value, index) {
+                if(value[3]=='Interno'){
+                    totalCostos++;
+                }
+                
+            });
+            return totalCostos;
+        }
         });
     </script>
     {% endif %}
 
     <div class="table-responsive rounded">
-        <center><h1>Lista de Incidentes Laborales</h1></center>
+        <center><h1>Lista de incidentes laborales</h1></center>
         <table id="tablaIncidentesLaborales" class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>

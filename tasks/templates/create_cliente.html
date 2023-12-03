@@ -16,28 +16,45 @@
                 {% csrf_token %}
             
                 <label for="id_nombre" class="form-label">Nombre del cliente</label>
-                <input type="text" name="nombre" class="form-control" id="id_nombre">
+                <input type="text" name="nombre" class="form-control" id="id_nombre" required>
             
-                <label for="id_tipocliente" class="form-label">Tipo de Cliente</label>
-                <select name="tipocliente" id="id_tipocliente" class="form-select">
-                    <option value="{{ MAYORISTA }}">Mayorista</option>
-                    <option value="{{ COMUN }}">Comun</option>
+                <label for="id_tipocliente" class="form-label">Tipo de cliente</label>
+                <select name="tipocliente" id="id_tipocliente" class="form-select" required>
+                    <option value="Mayorista">Mayorista</option>
+                    <option value="Menudista">Menudista</option>
                 </select>
             
-                <label for="fechanacimiento" class="form-label">Fecha de Nacimiento</label>
-                <input type="date" name="fechanacimiento" class="form-control" id="fechanacimiento">
+                <label for="fechanacimiento" class="form-label">Fecha de nacimiento</label>
+<input type="date" name="fechanacimiento" class="form-control" id="fechanacimiento" required oninput="validarFechaNacimiento()">
+
+<script>
+function validarFechaNacimiento() {
+    // Obtener la fecha actual
+    var fechaActual = new Date();
+
+    // Obtener la fecha de nacimiento ingresada
+    var fechaNacimiento = new Date(document.getElementById('fechanacimiento').value);
+
+    // Comparar las fechas
+    if (fechaNacimiento > fechaActual) {
+        alert('La fecha de nacimiento no puede ser mayor que la fecha actual.');
+        // Puedes agregar más lógica aquí, como limpiar el campo o deshabilitar el botón de envío.
+    }
+}
+</script>
+
             
                 <label for="id_correo" class="form-label">Correo</label>
-                <input type="email" name="correo" class="form-control" id="id_correo">
+                <input type="email" name="correo" class="form-control" id="id_correo" required>
             
                 <label for="id_celular" class="form-label">Celular</label>
-                <input type="text" name="celular" class="form-control" id="id_celular">
+                <input type="text" name="celular" class="form-control" id="id_celular" required maxlength="10">
             
                 <label for="id_referencias" class="form-label">Referencias</label>
-                <input type="text" name="referencias" class="form-control" id="id_referencias">
+                <input type="text" name="referencias" class="form-control" id="id_referencias" required>
             
-                <label for="id_direccion" class="form-label">Direccion</label>
-                <input type="text" name="direccion" class="form-control" id="id_direccion">
+                <label for="id_direccion" class="form-label">Dirección</label>
+                <input type="text" name="direccion" class="form-control" id="id_direccion" required>
             
                 <button type="submit" class="btn btn-primary mt-3">Guardar</button>
             </form>

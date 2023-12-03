@@ -6,31 +6,42 @@
 
     <div class="container">
         <div class="form-container">
-            <h1>Crear Incidente laboral</h1>
+            <h1>Crear incidente laboral</h1>
 
             {{ error }}
             <form action="/incidenteslaborales/create/" method="post">
                 {% csrf_token %}
         
                 <label for="id_horaIncidente" class="form-label">Hora Incidente:</label>
-                <input type="text" name="horaIncidente" id="id_horaIncidente" class="form-control">
+                <input type="text" name="horaIncidente" id="id_horaIncidente" class="form-control" required value="HH:MM:SS">
 
-                <label for="id_descripcion" class="form-label">Descripcion:</label>
-                <input type="text" name="descripcion" maxlength="100" id="id_descripcion" class="form-control"> 
+                <label for="id_descripcion" class="form-label">Descripción:</label>
+                <input type="text" name="descripcion" maxlength="100" id="id_descripcion" class="form-control" required> 
                 
                 <!--
                 <label for="id_reportadopor" class="form-label">Reportado Por:</label>
                 <input type="text" name="reportadopor" id="id_reportadopor" class="form-control">
                 -->
 
-                <label for="id_tipoIncidente" class="form-label">Tipo Incidente:</label>
-                <input type="text" name="tipoIncidente" maxlength="100" id="id_tipoIncidente" class="form-control">
+                
+
+                <label for="tipoIncidente" class="form-label">Tipo incidente:</label>
+                <select name="tipoIncidente" id="tipoIncidente" class="form-select" required>
+              
+            
+              <option value="Seleccione">Seleccione</option>
+            
+              <option value="Interno">Interno</option>
+            
+              <option value="Externo">Externo</option>
+            
+            </select>
   
                 <label for="id_accionesCorrectivas" class="form-label">Acciones correctivas:</label>
-                <input type="text" name="accionesCorrectivas" maxlength="100" id="id_accionesCorrectivas" class="form-control">
+                <input type="text" name="accionesCorrectivas" maxlength="100" id="id_accionesCorrectivas" class="form-control" required>
            
                 <label for="id_comentarios" class="form-label">Comentarios:</label>
-                <textarea name="comentarios" cols="40" rows="4" id="id_comentarios" class="form-control">
+                <textarea name="comentarios" cols="40" rows="4" id="id_comentarios" class="form-control" required>
             </textarea>
         
             <button type="submit" class="btn btn-primary mt-3">Guardar</button>

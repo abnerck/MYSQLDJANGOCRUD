@@ -40,18 +40,33 @@ from tasks.models import Cliente
 # GRAFICA DE BARRAS
 from collections import defaultdict
 
+from django.shortcuts import render
+import os
+
+import shutil
+import io
+
+from django.http import JsonResponse
 
 
-
-def nosotros(request):
-    return render(request, 'nosotros.html')
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+from .forms import RestoreForm
 
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+from django.contrib.auth.views import PasswordResetView
 
+
+#En esta funcion recibimos la peticion del usuario que nos arroja la pagina de nosotros.
+def nosotros(request):
+    return render(request, 'nosotros.html')
+
+
+#En esta funcion recibimos la peticion del usuario la cual nos arroja la pagina principal 
 def home(request):
     cutoff_date = timezone.now() - timedelta(minutes=1)
 
@@ -83,7 +98,7 @@ def home(request):
 
     # Configura el mensaje de correo
     subject = "¡Feliz Cumpleaños!"
-    message = "¡Feliz Cumpleaños! Te deseamos un día lleno de alegría y felicidad."
+    message = "¡Feliz Cumpleaños! Te deseamos un día lleno de alegría dad."
     from_email = 'maao202378@upemor.edu.mx'  # Tu dirección de correo electrónico
 
     # Conecta al servidor SMTP y envía el correo
@@ -128,7 +143,7 @@ def home(request):
 
 
 
-
+#Esta funcion recibe la peticion del usuario, que nos dirige a la pagina de registro
 def signup(request):
     if request.method == 'GET':
         return render(request, 'signup.html', {
@@ -156,11 +171,12 @@ def signup(request):
         })
 
         
-
+#Esta funcion recibe la peticion del usuario, y nos redirije a la pagina de home sin iniciar sesion 
 def signout(request):
     logout(request)
     return redirect(home)
 
+#Esta funcion recibe la peticion del usuario,  y nos arroja el formulario principal para registrarnos. 
 def signin(request):
     if request.method == 'GET':
         return render(request, 'signin.html', {
@@ -179,7 +195,7 @@ def signin(request):
             login(request, user)
             return redirect('home')
 
-# Productos
+#Esta funcion recibe la peticion del usuario, la cual nos arroja la pagina principal de productos. 
 @login_required
 def productos(request):
     newventa = Venta.objects.filter(visto=False).count()
@@ -199,6 +215,7 @@ def productos(request):
         'newventa':newventa
     })
 
+#Esta funcion recibe la peticion del usuario, el id del producto para eliminarlo
 @login_required
 def delete_productos(request,producto_id):
     if request.user.is_superuser:
@@ -211,6 +228,7 @@ def delete_productos(request,producto_id):
             producto.delete()
             return redirect('productos')
 
+#Esta funcion recibe la peticion del usuario y el id del producto 
 @login_required
 def producto_detail(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
@@ -237,6 +255,7 @@ def producto_detail(request, producto_id):
         'form': form
     })
 
+#Esta funcion recibe la peticion del usuario y nos direcciona a el formulario para crear un producto 
 @login_required
 def create_productos(request):
     provedores = Proveedor.objects.all()
@@ -260,6 +279,7 @@ def create_productos(request):
 
 # CHECAR ESTA FUNCION - que no esta leyendo objects.all()
 
+#Esta funcion recibe la peticion del usuario y nos arroja a la pagina de ordenes. 
 @login_required
 def ordenes(request):
     if request.user.is_superuser:
@@ -272,7 +292,7 @@ def ordenes(request):
     return render(request,'ordenes.html',{
         'ordenes':ordenes,
     })
-
+#Esta funcion recibe la peticion del usuario y el id de la orden para deletear la orden. 
 @login_required
 def delete_ordenes(request,orden_id):
     if request.user.is_superuser:
@@ -285,6 +305,7 @@ def delete_ordenes(request,orden_id):
             orden.delete()
             return redirect('ordenes')
 
+#Esta funcion recibe la peticion del usuario y el id del orden para ver los detalles de la orden en especifica 
 @login_required
 def orden_detail(request, orden_id):
     orden = get_object_or_404(Orden, pk = orden_id)
@@ -307,7 +328,7 @@ def orden_detail(request, orden_id):
         'form':form
     })
 
-
+#Esta funcion recibe la peticion del usuario y arroja el formulario para crear una orden 
 @login_required
 def create_orden(request):
     
@@ -341,6 +362,7 @@ def create_orden(request):
             })
 # USER
 
+#Esta funcion recibe la peticion del usuario para la creacion de usuarios. 
 @login_required
 def users(request):
     usr = User.objects.all()
@@ -359,6 +381,7 @@ def users(request):
         
     })
 
+#Esta funcion recibe la peticion del usuario y el id del usuario para la eliminacion 
 @login_required
 def delete_user(request,user_id):
     if request.user.is_superuser:
@@ -371,6 +394,7 @@ def delete_user(request,user_id):
             user.delete()
             return redirect('users')
 
+#Esta funcion recibe la peticion del usuario y el id del usuario para editarlo. 
 @login_required
 def user_detail(request, user_id):
     user = get_object_or_404(Usuario, pk=user_id)
@@ -398,6 +422,7 @@ def user_detail(request, user_id):
         'form':form
     })
   
+  #Esta funcion recibe la peticion del usuario para la creacion de un usuario 
 @login_required
 def create_user(request):
     
@@ -435,7 +460,7 @@ def clientes(request):
         'clientes': clientes,
     })
 
-
+#Esta funcion recibe la peticion del usuario, y el id del cliente para su edicion. 
 @login_required
 def cliente_detail(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
@@ -460,7 +485,7 @@ def cliente_detail(request, cliente_id):
         'form': form
     })
 
-
+#Esta funcion recibe la peticion del usuario y el id del cliente para la eliminacion
 @login_required
 def delete_clientes(request,cliente_id):
     if request.user.is_superuser:
@@ -474,6 +499,7 @@ def delete_clientes(request,cliente_id):
             cliente.delete()
             return redirect('clientes')
 
+#Esta funcion recibe la peticion del usuario y el formulario para la creacion de un cliente. 
 @login_required
 def create_cliente(request):
     if request.method == 'GET':
@@ -495,7 +521,7 @@ def create_cliente(request):
 
 
 
-
+#Esta funcion recibe la peticion del usuario para ver todas las tareas agregadas.
 #TAREAS
 @login_required
 def tasks(request):
@@ -506,13 +532,15 @@ def tasks(request):
 
     })
 
-
+#Esta funcion recibe la peticion del usuario para la creacion de una tarea
 @login_required
 def create_task(request):
     users = Usuario.objects.all()  # Consulta la tabla de usuarios y obtén todos los usuarios
+    usuario = User.objects.all()
+
     if request.method == 'GET':
         form = TaksForm()  # Crea una instancia del formulario
-        return render(request, 'create_task.html', {'form': form, 'users': users})
+        return render(request, 'create_task.html', {'form': form, 'users': users,'usuario':usuario})
     elif request.method == 'POST':
         form = TaksForm(request.POST)
         if form.is_valid():
@@ -521,10 +549,11 @@ def create_task(request):
             new_task.save()
             return redirect('tasks')
         else:
-            return render(request, 'create_task.html', {'form': TaksForm(), 'error': 'Por favor ingresa datos válidos', 'users': users})
+            return render(request, 'create_task.html', {'form': TaksForm(), 'error': 'Por favor ingresa datos válidos', 'users': users,'usuario':usuario})
     else:
         return HttpResponse("Método no permitido")
 
+#Esta funcion recibe la peticion del usuario y el id de la tarea para la eliminiacion de la tarea. 
 @login_required
 def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
@@ -532,12 +561,14 @@ def delete_task(request, task_id):
         task.delete()
         return redirect('tasks')
 
+#Esta funcion recibe la peticion del usuario y el id de la tarea para completar la tarea. 
 @login_required
 def tasks_completed(request):
     tasks = Task.objects.filter(user=request.user, datecompleted__isnull =False).order_by('-datecompleted')
     return render(request, 'tasks.html', {
         'tasks': tasks,})
-#Esta funcion es unica. 
+
+#Esta funcion recibe la peticion del usuario y ve las tareas compleatadas
 @login_required    
 def complete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
@@ -547,7 +578,7 @@ def complete_task(request, task_id):
         return redirect('tasks')
 
 
-
+#Esta funcion recibe la peticion del usuario y el id de la tarea para la edicion de la tarea
 @login_required
 def task_detail(request, task_id):
     
@@ -572,17 +603,14 @@ def task_detail(request, task_id):
             'form': form
             })
 
+#Esta funcion recibe la peticion del usuario y arroja las ventas que se han creado 
 # VENTAS
 @login_required
 def ventas(request):
     newventa = Venta.objects.filter(visto=False).count()
-    if request.user.is_superuser:
-        # ARREGLAR LA ORDENACION
-        ventas = Venta.objects.all()       
+    ventas = Venta.objects.all()       
+    
 
-    else:    
-
-        ventas = Venta.objects.filter(user=request.user).order_by('FechaVenta')
     return render(request, 'ventas.html', {
         'ventas': ventas,
         'newventa':newventa
@@ -590,7 +618,7 @@ def ventas(request):
     })
 
 
-
+#Esta funcion recibe la peticion del usuario y el id de la venta para la eliminacion 
 @login_required
 def delete_ventas(request,venta_id):
     if request.user.is_superuser:
@@ -604,21 +632,13 @@ def delete_ventas(request,venta_id):
             # checar funcionamiento de venta o ventas en la linea 260
             return redirect('ventas')
 
+#Esta funcion recibe la peticion del usuario  y el id de la venta para la edicion 
 @login_required
 def venta_detail(request, venta_id):
     venta = get_object_or_404(Venta, pk=venta_id)
-
+    form = ventaForm(instance=venta)
     # Verificar si el usuario es un superusuario
-    if request.user.is_superuser:
-        form = ventaForm(instance=venta)
-    else:
-        # Si el usuario no es un superusuario, verificar si es el propietario del producto
-        if venta.user != request.user:
-            # Si el usuario no es el propietario, no tiene permiso para acceder a la vista
-            return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
-
-        form = ventaForm(instance=venta)
-
+    
     if request.method == 'POST':
         form = ventaForm(request.POST, instance=venta)
         if form.is_valid():
@@ -630,6 +650,7 @@ def venta_detail(request, venta_id):
         'form': form
     })
 
+#Esta funcion recibe la peticion del usuario y arroja el formulario de la venta. 
 @login_required
 def create_ventas(request):
     clientes = Cliente.objects.all()
@@ -661,6 +682,7 @@ def create_ventas(request):
                 'form': ventaForm,
                 'error': 'Porfavor ingresar datos validos'
             })
+
 '''
 @login_required
 def detalleventas(request):
@@ -736,6 +758,8 @@ def create_detalleventa(request):
 
             '''
             
+
+#Esta funcion recibe la peticion del usuario y arroja las compras que se han realizado 
 @login_required
 def compras(request):
     
@@ -750,6 +774,8 @@ def compras(request):
         'compras':compras,
     })
 
+
+#Esta funcion recibe la peticion del usuario y el id de la compra para la eliminacion.
 @login_required
 def delete_compras(request,compra_id):
     if request.user.is_superuser:
@@ -762,7 +788,8 @@ def delete_compras(request,compra_id):
         if request.method == 'POST':
             compra.delete()
             return redirect('compra')
-        
+
+#Esta funcion recibe la peticion del usuario y el id de la compra para la edicion . 
 @login_required
 def compra_detail(request,compra_id):
     compra = get_object_or_404(Compra,pk=compra_id)
@@ -784,6 +811,7 @@ def compra_detail(request,compra_id):
         'form':form
     })
 
+#Esta funcion recibe la peticion del usuario y arroja el formulario para la creacion de compras. 
 @login_required
 def create_compras(request):
     ordenes =Orden.objects.all()
@@ -812,6 +840,7 @@ def create_compras(request):
                 'error': 'Porfavor ingresar datos validos'
             })
 
+#Esta funcion recibe la peticion del usuario y te arroja la pagina de los tickets. 
 @login_required
 def tickets(request):
     if request.user.is_superuser:
@@ -858,6 +887,7 @@ def ticket_detail(request,ticket_id):
         'form':form
     })
 
+
 @login_required
 def create_ticket(request):
     users = Usuario.objects.all()  # Consulta la tabla de usuarios y obtén todos los usuarios
@@ -881,6 +911,8 @@ def create_ticket(request):
                 'error':'Porfavor ingresa datos validos'
             })
     
+
+#Esta funcion recibe la peticion del usuario y te arroja a los incidentes laborales. 
 @login_required
 def incidenteslaborales(request):
     if request.user.is_superuser:
@@ -893,6 +925,7 @@ def incidenteslaborales(request):
         'incidenteslaborales':incidenteslaborales,
     })
 
+#Esta funcion recibe la peticion del usuario y el id de los incidentes para la eliminacion. 
 @login_required
 def delete_incidenteslaborales(request,incidenteslaborales_id):
     if request.user.is_superuser:
@@ -906,6 +939,7 @@ def delete_incidenteslaborales(request,incidenteslaborales_id):
             IncidenteLaborales.delete()
             return redirect('incidenteslaborales')
 
+#Esta funcion recibe la peticion del usuario y el id del incidente laboral para la edicion del mismo 
 @login_required
 def incidentelaboral_detail(request,incidenteslaborales_id):
     incidentelaboral = get_object_or_404(IncidenteLaboral,pk=incidenteslaborales_id)
@@ -926,7 +960,7 @@ def incidentelaboral_detail(request,incidenteslaborales_id):
         'incidentelaboral':incidentelaboral,
         'form':form
     })
-
+#Esta funcion recibe la peticion del usuario y arroja el formulario para la creacion de los incidentes. 
 @login_required
 def create_incidenteslaborales(request):
     if request.method == 'GET':
@@ -946,7 +980,7 @@ def create_incidenteslaborales(request):
                 'error': 'Porfavor ingresar datos validos'
             })
 
-
+#Esta funcion recibe la peticion del usuario y arroja la pagina de las opiniones. 
 @login_required
 def opiniones(request):
     if request.user.is_superuser:
@@ -959,6 +993,8 @@ def opiniones(request):
         'opiniones': opiniones,
     })
 
+
+#Esta funcion recibe la peticion del usuario y el id de la opinion para la edicion. 
 @login_required
 def opinion_detail(request, opinion_id):
     opinion = get_object_or_404(Opionion, pk=opinion_id)
@@ -982,6 +1018,7 @@ def opinion_detail(request, opinion_id):
         'form': form
     })
 
+#Esta funcion recibe la peticion del usuario y el id de la optinion que se desea eliminar. 
 @login_required
 def delete_opiniones(request,opinion_id):
     if request.user.is_superuser:
@@ -995,6 +1032,7 @@ def delete_opiniones(request,opinion_id):
             opinion.delete()
             return redirect('opiniones')
 
+#Esta funcion recibe la peticion del usuario y el formulario para la creacion de la opinion. 
 @login_required
 def create_opinion(request):
     if request.method == 'GET':
@@ -1014,6 +1052,8 @@ def create_opinion(request):
                 'error': 'Porfavor ingresar datos validos'
             })
 
+
+#Esta funcion recibe la peticion del usuario y te arroja la pagina de las herramientas. 
 @login_required
 def herramientas(request):
     
@@ -1030,6 +1070,7 @@ def herramientas(request):
 
     })
 
+#Esta funcion recibe la peticion del usuario y el id de la herramienta para la edicion de la herramienta. 
 @login_required
 def herramienta_detail(request, herramienta_id):
     herramienta = get_object_or_404(Herramienta, pk=herramienta_id)
@@ -1053,6 +1094,7 @@ def herramienta_detail(request, herramienta_id):
         'form': form
     })
 
+#Esta funcion recibe la peticion del usuario y el id de la herramienta para la eliminacion de la herramienta. 
 @login_required
 def delete_herramientas(request,herramienta_id):
     if request.user.is_superuser:
@@ -1066,6 +1108,7 @@ def delete_herramientas(request,herramienta_id):
             Herramientas.delete()
             return redirect('herramientas')
 
+#Esta funcion recibe la peticion del usuario y el formulario para la creacion de la herramienta. 
 @login_required
 def create_herramienta(request):
     if request.method == 'GET':
@@ -1085,6 +1128,7 @@ def create_herramienta(request):
                 'error': 'Porfavor ingresar datos validos'
             })
 
+#Esta funcion recibe la peticion del usuario para visualizar los proveedores. 
 # PROVEEDORES
 @login_required
 def proveedores(request):
@@ -1098,6 +1142,7 @@ def proveedores(request):
         'proveedores': proveedores,
     })
 
+#Esta funcion recibe la peticion del usuario y el id del proveedor para la edicion. 
 @login_required
 def proveedor_detail(request, proveedor_id):
     proveedor = get_object_or_404(Proveedor, pk=proveedor_id)
@@ -1121,6 +1166,7 @@ def proveedor_detail(request, proveedor_id):
         'form': form
     })
 
+#Esta funcion recibe la peticion del usuario y el id del proveedor para la eliminacion. 
 @login_required
 def delete_proveedores(request,proveedor_id):
     if request.user.is_superuser:
@@ -1134,6 +1180,8 @@ def delete_proveedores(request,proveedor_id):
             proveedor.delete()
             return redirect('proveedores')
 
+
+#Esta funcion recibe la peticion del usuario para la creacion de proveedor.
 @login_required
 def create_proveedor(request):
     if request.method == 'GET':
@@ -1155,6 +1203,7 @@ def create_proveedor(request):
                 'error': 'Porfavor ingresar datos validos'
             })
 
+#Esta funcion recibe la peticion del usuario para la visualizacion de lo servicios. 
 @login_required
 def servicio (request):
     if request.user.is_superuser:
@@ -1169,6 +1218,7 @@ def servicio (request):
         'servicio': servicio,
     })
 
+#Esta funcion recibe la peticion del usuario y arroja el formulario para la creacion del servicio. 
 @login_required
 def create_servicio(request):
     if request.method == 'GET':
@@ -1188,6 +1238,7 @@ def create_servicio(request):
                 'error': 'Porfavor ingresar datos validos'
             })
 
+#Esta funcion recibe la peticion del usuario y el id del servicio para la eliminacion. 
 @login_required
 def delete_servicio(request,servicio_id):
     if request.user.is_superuser:
@@ -1201,6 +1252,7 @@ def delete_servicio(request,servicio_id):
             servicios.delete()
             return redirect('servicios')
 
+#Esta funcion recibe la peticion del usuario y el id del servicio para la edicion. 
 @login_required
 def servicio_detail(request, servicio_id):
     servicio = get_object_or_404(Servicio, pk=servicio_id)
@@ -1237,7 +1289,7 @@ def mantenimiento(request):
 
 
 
-
+#Esta funcion recibe la peticion del usuario y arroja el formulario para la creacion de un mantenimiento. 
 @login_required
 def create_mantenimiento(request):
     herramientas = Herramienta.objects.all()
@@ -1261,6 +1313,7 @@ def create_mantenimiento(request):
                 'error': 'Porfavor ingresar datos validos'
             })
 
+#Esta funcion recibe la peticion del usuario y el id del mantenimiento para la eliminacion. 
 @login_required
 def delete_mantenimiento(request,mantenimiento_id):
     if request.user.is_superuser:
@@ -1273,7 +1326,8 @@ def delete_mantenimiento(request,mantenimiento_id):
         if request.method == 'POST':
             servicios.delete()
             return redirect('mantenimiento')
-    
+
+# Esta funcion recibe dos parametros, el metodo request y el id del mantenimiento que es el que nos arroja los detalles del mantenimiento en especifico. 
 @login_required
 def mantenimiento_detail(request, mantenimiento_id):
     mantenimiento = get_object_or_404(Mantenimiento, pk=mantenimiento_id)
@@ -1297,7 +1351,7 @@ def mantenimiento_detail(request, mantenimiento_id):
         'form': form
     })
 
-
+'''
 def backup_database(request):
     if request.method == 'POST':
         # Ejecuta el comando de respaldo
@@ -1310,22 +1364,29 @@ def backup_database(request):
     else:
         message = ''
 
+    return render(request, 'respaldo.html', {'message': message})'''
+
+#Esta funcion recibe la peticion del usuario que es para realizar el respaldo. 
+def backup_database(request):
+    message = None  # Inicializa el mensaje como None
+
+    if request.method == 'POST':
+        # Ejecuta el comando de respaldo
+        result = os.system('python manage.py backup_db')
+        if result == 0:
+            message = 'Respaldo exitoso.'
+            respaldo_exitoso = True
+        else:
+            message = 'Error al realizar el respaldo.'
+
     return render(request, 'respaldo.html', {'message': message})
 
 
 
-import shutil
-import io
-
-from django.http import JsonResponse
 
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-from .forms import RestoreForm
-# ...
 
+#Esta funcion recibe la peticion del usuario, para restablecer la base de datos. 
 def restore_database(request):
     if request.method == 'POST':
         form = RestoreForm(request.POST, request.FILES)
@@ -1348,13 +1409,7 @@ def restore_database(request):
 
 
 
-from django.contrib.auth.views import PasswordResetView
 
+#Esta funcion recibe la peticion del usuario y arroja el formulario para configurar la nueva contraseña.
 def password_reset_view(request):
     return PasswordResetView.as_view()(request)
-
-
-
-
-
-

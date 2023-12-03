@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
+    <!-- Agrega esto en la sección head de tu HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+
 <body>
     <center>
         <!-- Título "Personalizarte Imprenta" con el mismo estilo -->
@@ -33,9 +39,9 @@
                         </button>
                     </form>
                     {% if user.is_superuser  %}
-                    <form action="{% url 'delete_task' task.id %}" method="POST">
+                    <form id="deleteForm" action="{% url 'delete_task' task.id %}" method="POST">
                         {% csrf_token %}
-                        <button class="btn btn-danger">
+                        <button class="btn btn-danger" type="button" onclick="confirmDelete()" >
                             Eliminar
                         </button>
                     </form>
@@ -86,5 +92,42 @@
         }
 
 </style>
+<script>
+    function confirmDelete() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¡No podrás revertir esto!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminarlo'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, envía el formulario de eliminación
+                document.getElementById('deleteForm').submit();
+            }
+        });
+    }
+</script>
+<script>
+    function confirmDelete() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¡No podrás revertir esto!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminarlo'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, envía el formulario de eliminación
+                document.getElementById('deleteForm').submit();
+            }
+        });
+    }
+</script>
+
 
 {% endblock %}

@@ -18,11 +18,11 @@
 
         <!-- Agregar campos de búsqueda -->
         <div class="mb-3">
-            <label for="filtroProveedor" class="form-label">Buscar por Proveedor:</label>
+            <label for="filtroProveedor" class="form-label">Buscar por proveedor:</label>
             <input type="text" class="form-control" id="filtroProveedor">
         </div>
         <div class="mb-3">
-            <label for="filtroEmpleado" class="form-label">Buscar por Tipo de Empleado:</label>
+            <label for="filtroEmpleado" class="form-label">Buscar por Tipo de empleado:</label>
             <input type="text" class="form-control" id="filtroEmpleado">
         </div>
 
@@ -30,7 +30,7 @@
     
     
         <div class="table-responsive rounded">
-            <center><h1>Lista Compras</h1></center>
+            <center><h1>Lista compras</h1></center>
             <table id="tablaCompras" class="table table-bordered table-striped ">
                 <thead class="thead-dark">
                     <tr>
@@ -40,10 +40,14 @@
 
                         <th>Proveedor</th>
                         
-                        <th>Fecha Compra</th>
-                        
+                        <th>Fecha compra</th>
+                        {% if user.is_superuser or user.is_staff %}
+                        <th>Estado</th>
+                        {% endif %}
                         <th>Creador</th>
+                        {% if user.is_superuser or user.is_staff %}    
                         <th>Detalles</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -55,10 +59,15 @@
                         <td>{{ compra.idProveedor }}</td>
                         
                         <td>{{ compra.fechaCompra }}</td>
+                        {% if user.is_superuser or user.is_staff %}
+                        <td>{{ compra.estado }}</td>
+                        {% endif %}
                         
                         
-                        <td>{{ compra.user.username }}</td>                    
+                        <td>{{ compra.user.username }}</td>      
+                        {% if user.is_superuser or user.is_staff %}              
                         <td><a href="{% url 'compra_detail' compra.id %}">Detalles</a></td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -104,7 +113,7 @@
         overflow: hidden;
     }
     body {
-        background-color: rgb(255, 255, 255);
+        background-color: rgb(248, 186, 186);
         background-size: cover;
     }
     

@@ -6,7 +6,7 @@
 
     <div class="container">
         <div class="form-container">
-            <h1>Crear Opinion</h1>
+            <h1>Crear opinión</h1>
 
             {{ error }}
 
@@ -14,19 +14,19 @@
                 {% csrf_token %}
         
             <label for="Correo" class="form-label">Correo:</label>
-            <input type="text" name="Correo" id="Correo" class="form-control">
+            <input type="email" name="Correo" id="Correo" class="form-control" required>
             <label for="tipo" class="form-label">Tipo:</label>
-            <select name="tipo" id="tipo" class="form-select">
+            <select name="tipo" id="tipo" class="form-select" required>
                 <option value="Queja">Queja</option>
-                <option value="Opinion">Opinion</option>
+                <option value="Opinion">Opinión</option>
                 <option value="Sugerencia">Sugerencia</option>
             </select>
-            <label for="descripcion" class="form-label">Descripcion</label>
-            <textarea  class="form-control" name="descripcion" id="descripcion" cols="30" rows="4"></textarea>
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea  class="form-control" name="descripcion" id="descripcion" cols="30" rows="4" required></textarea>
             
 
-            <label for="calificacion" class="form-label">Calificacion:</label>
-            <select name="calificacion" class="form-select" id="calificacion">
+            <label for="calificacion" class="form-label">Calificación:</label>
+            <select name="calificacion" class="form-select" id="calificacion" required>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>

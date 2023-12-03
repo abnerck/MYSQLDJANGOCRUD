@@ -7,7 +7,7 @@
 
     <div class="container">
         <div class="form-container">
-            <h1>Crear Servicios</h1>
+            <h1>Crear servicios</h1>
             {{ error }}
             
  
@@ -16,15 +16,15 @@
         
                 <p>
                     <label for="id_nombre" class="form-label">Nombre:</label>
-                    <input type="text" name="nombre" maxlength="100" id="id_nombre" class="form-control">
+                    <input type="text" name="nombre" maxlength="100" id="id_nombre" class="form-control" required>
                     
                     
                   </p>
                 
                   
                   <p>
-                    <label for="id_descripcion" class="form-label">Descripcion:</label>
-                    <input type="text" name="descripcion" maxlength="100" id="id_descripcion" class="form-control">
+                    <label for="id_descripcion" class="form-label">Descripción:</label>
+                    <input type="text" name="descripcion" maxlength="100" id="id_descripcion" class="form-control" required>
                     
                     
                   </p>
@@ -32,23 +32,23 @@
                   
                   <p>
                     <label for="id_precio" class="form-label">Precio:</label>
-                    <input type="number" name="precio" id="id_precio" class="form-control">
+                    <input type="number" name="precio" id="id_precio" class="form-control" min="0" required >
                     
                     
                   </p>
                 
                   
                   <p>
-                    <label for="id_tiempoestimado" class="form-label">Timepo Estimado:</label>
-                    <input type="number" name="tiempoestimado" id="id_tiempoestimado" class="form-control">
+                    <label for="id_tiempoestimado" class="form-label">Tiempo estimado:</label>
+                    <input type="number" name="tiempoestimado" id="id_tiempoestimado" class="form-control" required min="1" max="72">
                     
                     
                   </p>
                 
                   
                   <p>
-                    <label for="id_categoria" class="form-label">Categoria:</label>
-                    <input type="text" name="categoria" maxlength="100" id="id_categoria" class="form-control">
+                    <label for="id_categoria" class="form-label">Categoría:</label>
+                    <input type="text" name="categoria" maxlength="100" id="id_categoria" class="form-control" required>
                     
                     
                   </p>
@@ -56,15 +56,15 @@
                   
                   <p>
                     <label for="id_notas" class="form-label">Notas:</label>
-                    <input type="text" name="notas" maxlength="100" id="id_notas" class="form-control">
+                    <input type="text" name="notas" maxlength="100" id="id_notas" class="form-control" required>
                     
                     
                   </p>
                 
                   
                   <p>
-                    <label for="id_estadoServicio" class="form-label">Estado Servicio:</label>
-                    <select name="estadoServicio" id="id_estadoServicio" class="form-select">
+                    <label for="id_estadoServicio" class="form-label">Estado servicio:</label>
+                    <select name="estadoServicio" id="id_estadoServicio" class="form-select" required>
                   
                 
                   <option value="Activo">Activo</option>

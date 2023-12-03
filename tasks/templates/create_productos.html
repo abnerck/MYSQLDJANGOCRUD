@@ -7,7 +7,7 @@
 
     <div class="container">
         <div class="form-container">
-            <h1>Crear Productos</h1>
+            <h1>Crear productos</h1>
             {{ error }}
             <form action="/productos/create/" method="post">
                 {% csrf_token %}
@@ -16,32 +16,32 @@
                 <input type="text" name="nombre" maxlength="50" required id="id_nombre" class="form-control">
 
 
-                <label for="id_descripcion" class="form-label">Descripcion:</label>
+                <label for="id_descripcion" class="form-label">Descripción:</label>
                 <input type="text" name="descripcion" maxlength="50" required id="id_descripcion" class="form-control">
 
                 <label for="id_categoria" class="form-label">Categoria:</label>
                 <input type="text" name="categoria" maxlength="50" required id="id_categoria" class="form-control">
 
-                <label for="id_precioComun" class="form-label">Precio Comun:</label>
-                <input type="number" name="precioComun" id="id_precioComun" class="form-control">
+                <label for="id_precioComun" class="form-label">Precio Común:</label>
+                <input type="text" name="precioComun" id="id_precioComun" class="form-control"  required min="0">
 
                 <label for="id_precioMayoreo" class="form-label">Precio mayoreo:</label>
-                <input type="number" name="precioMayoreo" id="id_precioMayoreo" class="form-control">
+                <input type="text" name="precioMayoreo" id="id_precioMayoreo" class="form-control" required min="0">
 
                 <label for="id_canStock" class="form-label">Cantidad en stock:</label>
-                <input type="number" name="canStock" id="id_canStock" class="form-control">
+                <input type="number" name="canStock" id="id_canStock" class="form-control" min="0" required>
 
                 <label for="id_tamaño" class="form-label">Tamaño:</label>
-                <input type="text" name="tamaño" maxlength="50" id="id_tamaño" class="form-control">
+                <input type="text" name="tamaño" maxlength="50" id="id_tamaño" class="form-control" required>
 
                 <label for="id_material" class="form-label">Material:</label>
-                <input type="text" name="material" maxlength="50" id="id_material" class="form-control">
+                <input type="text" name="material" maxlength="50" id="id_material" class="form-control" required>
 
-                <label for="id_tiempodeProduccion" class="form-label">Tiempo de produccion:</label>
-                <input type="text" name="tiempodeProduccion" id="id_tiempodeProduccion" class="form-control">
+                <label for="id_tiempodeProduccion" class="form-label">Tiempo de producción:</label>
+                <input type="text" name="tiempodeProduccion" id="id_tiempodeProduccion" class="form-control" required>
 
                 <label for="id_estado" class="form-label">Estado:</label>
-                <select name="estado" id="id_estado" class="form-select">
+                <select name="estado" id="id_estado" class="form-select" required>
 
 
                     <option value="Activo">Activo</option>
@@ -52,7 +52,7 @@
 
                 
                 <label for="id_idProveedor" class="form-label">Proveedor:</label>
-                    <select name="idProveedor" id="id_idProveedor" class="form-select">
+                    <select name="idProveedor" id="id_idProveedor" class="form-select" required>
                     {% for proveedor in provedores %}
                     <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
                     {% endfor %}

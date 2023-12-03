@@ -49,6 +49,8 @@
 
             {% endif %}
 
+            <!-- DE AQUI PARA ARRIBA ESTA BIEN-->
+
             {% if user.is_authenticated %}
 
 
@@ -58,23 +60,26 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Gestion de informacion <i class="fa-solid fa-bars" style="color: #00040b;"></i>
+                            Gestión de información <i class="fa-solid fa-bars" style="color: #00040b;"></i>
                         </a>
 
                         <ul class="dropdown-menu">
                             {% if user.is_superuser or user.is_staff %}
                             <li class="nav-item">
-                                <a href="/tasks" class="nav-link">Tareas</a>
+                                <a href="/tasks" class="nav-link"><i class="fa-solid fa-file-pdf"
+                                        style="color: #00060f;"></i>Tareas</a>
                             </li>
-                            {% endif %}
+
                             <li class="nav-item">
-                                <a href="/clientes" class="nav-link">Clientes</a>
+                                <a href="/clientes" class="nav-link"><i class="fa-solid fa-file-pdf"
+                                        style="color: #00060f;"></i>Clientes</a>
                             </li>
-                            {% if user.is_superuser or user.is_staff %}
+
                             <li class="nav-item">
-                                <a href="/users" class="nav-link">Usuarios</a>
+                                <a href="/users" class="nav-link"><i class="fa-solid fa-file-pdf"
+                                        style="color: #00060f;"></i>Usuarios</a>
                             </li>
-                            {% endif %}
+
 
 
                             <!--
@@ -83,27 +88,28 @@
                             </li>
                             -->
                             <li class="nav-item">
-                                <a href="/opiniones" class="nav-link">Opiniones</a>
+                                <a href="/opiniones" class="nav-link">
+                                    <i class="fa-solid fa-file-pdf" style="color: #00060f;"></i>Opiniones</a>
                             </li>
                             <li class="nav-item">
-                                <a href="/herramientas" class="nav-link">Herramientas</a>
+                                <a href="/herramientas" class="nav-link">
+                                    <i class="fa-solid fa-file-pdf" style="color: #00060f;"></i>Herramientas</a>
                             </li>
                             <li class="nav-item">
-                                <a href="/proveedores" class="nav-link">Proveedores</a>
+                                <a href="/proveedores" class="nav-link">
+                                    <i class="fa-solid fa-file-pdf" style="color: #00060f;"></i>Proveedores</a>
                             </li>
-                            {% if user.is_superuser and user.is_staff %}
+
                             <li class="nav-item">
                                 <a href="/incidenteslaborales" class="nav-link">
-                                    <i class="fa-solid fa-file-pdf"
-                                        style="color: #00060f;"></i>
+                                    <i class="fa-solid fa-file-pdf" style="color: #00060f;"></i>
                                     Incidente Laboral</a>
-                                
+
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a href="/productos" class="nav-link">
-                                    <i class="fa-solid fa-file-pdf"
-                                        style="color: #00060f;"></i>Productos</a>
+                                    <i class="fa-solid fa-file-pdf" style="color: #00060f;"></i>Productos</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/servicio" class="nav-link"><i class="fa-solid fa-file-pdf"
@@ -133,22 +139,40 @@
                                 <a href="/productos" class="nav-link">Productos</a>
                             </li>
                             <li class="nav-item">
+                                <a href="/clientes" class="nav-link">Clientes</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="/servicio" class="nav-link">Servicios</a>
                             </li>
-                            <!--
                             <li class="nav-item">
-                                <a href="/ordenes" class="nav-link">Ordenes </a>
+                                <a href="/herramientas" class="nav-link">
+                                    Herramientas</a>
                             </li>
-                            -->
                             <li class="nav-item">
-                                <a href="/ventas" class="nav-link"> Ventas </a>
+                                <a href="/proveedores" class="nav-link">
+                                    Proveedores</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a href="/opiniones" class="nav-link">
+                                    Opiniones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/mantenimiento" class="nav-link">Mantenimiento </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/incidenteslaborales" class="nav-link">
+                                    
+                                    Incidente Laboral</a>
+
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a href="/ventas" class="nav-link">Ventas </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="/compras" class="nav-link">Compras </i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/mantenimiento" class="nav-link">Mantenimiento </a>
                             </li>
                             {% endif %}
                         </ul>
@@ -175,7 +199,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Configuracion de la cuenta <i class="fa-solid fa-user" style="color: #000000;"></i>
+                            Configuración de la cuenta <i class="fa-solid fa-user" style="color: #000000;"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="nav-item">
@@ -183,10 +207,11 @@
                                         class="fa-solid fa-key" style="color: #000103;"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a href="/logout" class="nav-link">Cerrar sesion <i
+                                <a href="/logout" class="nav-link">Cerrar sesión <i
                                         class="fa-solid fa-right-from-bracket" style="color: #000102;"></i> </a>
                             </li>
                         </ul>
+                        
 
                         {% if user.is_superuser %}
 
@@ -204,7 +229,11 @@
                                     d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
                             </svg>1
                         </a>
-                        {% endif %}
+
+
+
+
+                         {% endif %}
 
                         <ul class="dropdown-menu">
 
@@ -238,7 +267,45 @@
 
                             </li>
 
-                            {% endif %}
+                            {% elif user.is_staff %}
+
+                            
+
+                            <li class="nav-item dropdown">
+                                {% if newproduct > 0 or newventa > 0 or hbd > 0%}
+                                <audio autoplay>
+                                    <source src="" type="audio/mpeg">
+        
+                                </audio>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+                                    </svg>1
+                                </a>
+        
+        
+        
+        
+                                {% endif %}
+        
+                                <ul class="dropdown-menu">
+        
+                                            {% if newventa > 0 %}
+                                            <a href="/ventas" style="text-decoration: none;">Se han registrado {{newventa}}
+                                                ventas</a>
+        
+                                            {% else %}
+                                            <as tyle="text-decoration: none;">No hay notificaciones ventas
+                                                {% endif %}
+                                                <br>
+                                 
+        
+                                    </li>
+        
+                                    {% endif %}
 
 
                             {% else %}
@@ -251,11 +318,11 @@
                                             style="color: #000000;"></i> </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/signup" class="nav-link">Singup <i class="fa-solid fa-user-plus"
+                                    <a href="/signup" class="nav-link">Regístrate <i class="fa-solid fa-user-plus"
                                             style="color: #000000;"></i> </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/signin" class="nav-link">Signin <i class="fa-solid fa-door-open"
+                                    <a href="/signin" class="nav-link">Entrar <i class="fa-solid fa-door-open"
                                             style="color: #000000;"></i> </a>
                                 </li>
                             </ul>

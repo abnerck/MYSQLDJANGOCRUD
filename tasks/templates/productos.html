@@ -84,11 +84,11 @@
      
         <!-- Agregar campos de búsqueda -->
         <div class="mb-3">
-            <label for="filtroEstado" class="form-label">Buscar por Estado:</label>
+            <label for="filtroEstado" class="form-label">Buscar por estado:</label>
             <input type="text" class="form-control" id="filtroEstado">
         </div>
         <div class="mb-3">
-            <label for="filtroProveedor" class="form-label">Buscar por Proveedor:</label>
+            <label for="filtroProveedor" class="form-label">Buscar por proveedor:</label>
             <input type="text" class="form-control" id="filtroProveedor">
         </div>
      
@@ -99,18 +99,18 @@
             
             <table id="tablaProductos" class="table table-bordered table-striped rounded">
                 <center>
-                    <h1>Lista de Productos</h1>
+                    <h1>Lista de productos</h1>
                 </center>
                 <thead class="thead-dark">
                     <tr>
                         <th>Stock</th>
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th>Categoria</th>
+                        <th>Categoría</th>
                         <th>Estado</th>
                         {% if user.is_superuser or user.is_staff %}
                                                           
-                        <th>visto</th>
+                        <th>Visto</th>
                         {% endif %}
                         
                         {% if user.is_superuser or user.is_staff %}

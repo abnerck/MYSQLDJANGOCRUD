@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
+    <!-- Agrega esto en la sección head de tu HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
 <body>
     <center>
         <!-- Título "Personalizarte Imprenta" con el mismo estilo -->
@@ -25,9 +30,9 @@
                     </form>
 
                     {% if user.is_superuser  %}
-                    <form method="post" action="{% url 'delete_opiniones' opinion.id %}">
+                    <form id="deleteForm" method="post" action="{% url 'delete_opiniones' opinion.id %}">
                         {% csrf_token %}
-                        <button class="btn btn-danger" type="submit">Eliminar</button>
+                        <button class="btn btn-danger" type="button"onclick="confirmDelete()" >Eliminar</button>
                     </form>
                     {% endif %}
                 </div>
@@ -84,5 +89,24 @@
         }
 
 </style>
+<script>
+    function confirmDelete() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¡No podrás revertir esto!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminarlo'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, envía el formulario de eliminación
+                document.getElementById('deleteForm').submit();
+            }
+        });
+    }
+</script>
+
 
 {% endblock %}

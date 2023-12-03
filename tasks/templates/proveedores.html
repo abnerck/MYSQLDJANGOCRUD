@@ -7,13 +7,36 @@
 
         <a href="/proveedores/" class="text-dark text-decoration-none"><h1>Proveedores</h1></a>
         {% if user.is_superuser or user.is_staff %}
-    <a href="/proveedores/create/" class="btn btn-danger mt-3">Agregar Proveedor</a>
+    <a href="/proveedores/create/" class="btn btn-danger mt-3">Agregar proveedor</a>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
     {% endif %}
+     <!-- Agregar campos de búsqueda -->
+     <div class="mb-3">
+        <label for="filtroProveedor" class="form-label">Buscar por proveedor:</label>
+        <input type="text" class="form-control" id="filtroProveedor">
     </div>
+    <div class="mb-3">
+        <label for "filtroEstado" class="form-label">Buscar por estado:</label>
+        <input type="text" class="form-control" id="filtroEstado">
+    </div>
+    </div>
+    
     
     <main class="container">
         <div class="table-responsive rounded">
-            <center> <h1>Lista de Proveedores</h1> </center>
+            <center> <h1>Lista de proveedores</h1> </center>
             <table id="tablaProveedores" class="table table-bordered table-striped rounded">
                 <thead class="thead-dark">
                     <tr>
@@ -21,7 +44,7 @@
                         <th>Estado</th>
                         <th>Correo</th>
                         
-                        <th>Telefono</th>
+                        <th>Teléfono</th>
                         <th>Creador</th>
                         {% if user.is_superuser or user.is_staff %}
                         <th>Detalles </th>
@@ -48,38 +71,94 @@
     </main>
 </body>
 <style>
-    .table {
-        width: 100%;
-        margin-bottom: 1rem;
-        color: #333;
-    }
-
-    .table th,
-    .table td {
-        padding: 0.75rem;
-        vertical-align: top;
-        border-top: 1px solid #dee2e6;
-    }
-
-    .table thead th {
-        vertical-align: bottom;
-        border-bottom: 2px solid #dee2e6;
-        background-color: #f8f9fa;
-    }
-
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: rgba(0, 0, 0, 0.05);
-    }
-
-    .rounded {
-        border-radius: 1em; /* Ajusta el valor según el grado de ovalado que desees */
-        overflow: hidden;
-    }
-    body {
-        background-color: aqua;
+       body {
+        background-color: rgb(231, 224, 214);
         background-size: cover;
     }
+
+    .btn-excel {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    .btn-pdf {
+        background-color: red !important;
+        color: white !important;
+    }
+
+    #tablaProductos_filter input[type="search"] {
+        background-color: white;
+        color: black;
+    }
+    #tablaProveedores_filter input[type="search"] {
+        background-color: white;
+        color: black;
+    }
 </style>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#tablaProveedores').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: 'Excel',
+                    title: 'Tabla de Proveedores',
+                    className: 'btn-excel', // Agregar esta clase para el botón de Excel
+                    exportOptions: {
+                        columns: [0, 1, 2, 3] // Columnas a exportar a Excel
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: 'PDF',
+                    filename: 'tabla_Proveedores',
+                    title: 'Tabla de Proveedores',
+                    className: 'btn-pdf', // Agregar esta clase para el botón de PDF
+                    customize: function (doc) {
+                        var activos = calcularActivos();
+
+                        // Agregar la imagen y otros elementos personalizados al PDF...
+
+                        doc.content.push({
+                            text: 'Cantidad de Proveedores Activos:' + activos,
+                            margin: [0, 0, 20, 0],
+                            alignment: 'right'
+                        });
+
+                        // Más código personalizado...
+                    },
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                }
+            ],
+            select: true
+        });
+
+        $('#filtroProveedor, #filtroEstado').on('keyup', function () {
+            table
+                .columns(0)
+                .search($('#filtroProveedor').val())
+                .columns(1)
+                .search($('#filtroEstado').val())
+                .draw();
+        });
+
+        function calcularActivos() {
+            var activos = 0;
+            table.rows({ search: 'applied' }).data().each(function (value, index) {
+                if ( value[1]=='Activo'){
+                    activos++;
+                }
+            });
+            return activos;
+        }
+    });
+
+    // ESTE CODIGO ESTA BIEN
+</script>
 
 
 

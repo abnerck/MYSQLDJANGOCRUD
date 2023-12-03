@@ -6,14 +6,14 @@
     <div class="container mt-4">
         <a href="/opiniones/" class="text-dark text-decoration-none"><h1 >Opiniones</h1></a>
 
-<a href="{% url 'create_opinion' %}" class="btn btn-danger mt-3">Crear nueva Opinion</a>
+<a href="{% url 'create_opinion' %}" class="btn btn-danger mt-3">Crear nueva opinion</a>
 
 
     </div>
     
 <div class="container mt-4">
     
-    <h2 class="text-center">Lista de Opiniones</h2>
+    <h2 class="text-center">Lista de opiniones</h2>
 
     <div class="table-responsive rounded">
         <table class="table table-bordered table-striped">
@@ -21,7 +21,7 @@
                 <tr>
                     <th>Correo</th>
                     <th>usuario</th>
-                    <th>calificacion</th>
+                    <th>calificación</th>
                     <th>Fecha</th>
                     {% if user.is_superuser or user.is_staff %}
                     <th>Detalle</th>

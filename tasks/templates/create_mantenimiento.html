@@ -7,7 +7,7 @@
 
     <div class="container">
         <div class="form-container">
-            <h2>Crear Mantenimiento</h2>
+            <h2>Crear mantenimiento</h2>
             {{ error }}
 
             <form action="/mantenimiento/create/" method="post">
@@ -27,7 +27,7 @@
 
 
                 <p>
-                    <label for="id_fechaMantenimineto" class="form-label">Fecha de Mantenimiento:</label>
+                    <label for="id_fechaMantenimineto" class="form-label">Fecha de mantenimiento:</label>
                     <input type="date" name="fechaMantenimineto" id="id_fechaMantenimineto" class="form-control">
 
 
@@ -35,7 +35,7 @@
 
 
                 <p>
-                    <label for="id_tipoMantenimiento" class="form-label">Tipo Mantenimiento:</label>
+                    <label for="id_tipoMantenimiento" class="form-label">Tipo mantenimiento:</label>
                     <select name="tipoMantenimiento" id="id_tipoMantenimiento" class="form-select">
                         <option value="Correctivo" selected>Correctivo</option>
                         <option value="Preventivo" selected>Preventivo</option>
@@ -57,7 +57,7 @@
 
                 <p>
                     <label for="id_costo" class="form-label" class="form-label">Costo:</label>
-                    <input type="number" name="costo" id="id_costo" class="form-control">
+                    <input type="number" name="costo" id="id_costo" class="form-control" min="1" required>
 
 
                 </p>

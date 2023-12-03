@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
 <body>
     <div class="container">
         <div class="form-container">
             <h1 class="display-4 mt-5">Respaldo de la Base de Datos</h1>
             <p class="lead">Haz un respaldo seguro de tu base de datos.</p>
-            <form action="{% url 'respaldo' %}" method="post">
+            <form onsubmit="confirmRespaldo()" action="{% url 'respaldo' %}" method="post">
                 
                 {% csrf_token %}
-                <button type="submit" class="btn btn-danger mt-3">Realizar Respaldo</button>
+                <button   class="btn btn-danger mt-3">Realizar respaldo</button>
                 
                     
             </form>
@@ -26,7 +30,7 @@
 
         body {
             font-family: Arial, sans-serif; /* Fuente predeterminada para el cuerpo */
-            background-image:url(https://atlantictech.io/wp-content/uploads/2022/08/4113d-basededatos.png);
+            background-color: aqua;
             margin: 0; /* Elimina los márgenes predeterminados */
             padding: 0; /* Elimina el relleno predeterminado */
         }
@@ -62,5 +66,19 @@
     </body>
     
 </body>
+
+<script>
+    function confirmRespaldo() {
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "La base de datos se guardó correctamente!",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+    
+</script>
+
 
 {% endblock %}

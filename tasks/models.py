@@ -85,8 +85,9 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=50)
     categoria = models.CharField(max_length=50)
     # se ponen blank true  y null true para que no haya problema a la hora de no llenar esos campos.
-    precioComun = models.IntegerField(blank=True, null=True)
-    precioMayoreo = models.IntegerField(blank=True, null=True)
+    precioComun = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #precioMayoreo = models.IntegerField(blank=True, null=True)
+    precioMayoreo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     canStock = models.IntegerField(blank=True, null=True)
     # ESTA FECHA SE INGRESARA EN AUTOMATICO 
     fechaingreso = models.DateTimeField(auto_now_add=True,null=True,blank=True)
@@ -354,7 +355,7 @@ class Herramienta(models.Model):
     fechaAdquisicion = models.DateField(blank=True,null=True)
     idProveedor = models.ForeignKey(Proveedor,on_delete=models.CASCADE,null=True,blank=True)
     estadoHerramienta = models.CharField(blank=True,null=True,max_length=100)
-    valor = models.IntegerField(blank=True,null=True,validators=[MinValueValidator(0)])
+    valor = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True,validators=[MinValueValidator(0)])
     notas = models.TextField(blank=True,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
 
