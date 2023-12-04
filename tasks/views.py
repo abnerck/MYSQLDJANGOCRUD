@@ -176,7 +176,7 @@ def signout(request):
     logout(request)
     return redirect(home)
 
-#Esta funcion recibe la peticion del usuario,  y nos arroja el formulario principal para registrarnos. 
+#Esta funcion recibe la peticion del usuario,  y nos dirige a la pagina de home. 
 def signin(request):
     if request.method == 'GET':
         return render(request, 'signin.html', {
