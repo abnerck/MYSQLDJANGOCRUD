@@ -72,7 +72,16 @@ class Proveedor(models.Model):
     nombre = models.CharField(blank=True,null=True,max_length=100)
     correo = models.EmailField(blank=True,null=True)
     telefono = models.CharField(blank=True,null=True,max_length=100)
-    estadodelprovedor = models.TextField(blank=True,null=True)
+
+    ACTIVO = 'Activo'
+    DESACTIVADO = 'Desactivado'
+
+    ESTADO_CHOICES = [
+        (ACTIVO, 'Activo'),
+        (DESACTIVADO, 'Desactivado'),
+    ]
+
+    estadodelprovedor = models.TextField(blank=True,null=True,choices=ESTADO_CHOICES,)
     #productos = models.CharField(blank=True,null=True,max_length=100)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
@@ -123,11 +132,11 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=50)
 
     MAYORISTA = 'Mayorista'
-    COMUN = 'Comun'
+    COMUN = 'Menudista'
 
     ESTADO_CHOICES = [
         (MAYORISTA, 'Mayorista'),
-        (COMUN, 'Comun'),
+        (COMUN, 'Menudista'),
     ]
 
     tipocliente = models.CharField(max_length=100, blank=True, null=True, choices=ESTADO_CHOICES)
@@ -155,8 +164,8 @@ class Servicio(models.Model):
     nombre = models.CharField(blank=True,null=True,max_length=100)
     descripcion = models.CharField(blank=True,null=True,max_length=100)
     # verificar si es integer o decimal
-    precio = models.IntegerField(blank=True,null=True)
-    
+    precio = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+        
     tiempoestimado = models.IntegerField(blank=True,null=True)
     categoria = models.CharField(blank=True,null=True,max_length=100)
     notas = models.CharField(blank=True,null=True,max_length=100)
@@ -227,8 +236,8 @@ class Venta(models.Model):
     descripcion = models.CharField(max_length=100,null=True,blank=True)
     #idOrden = models.ForeignKey(Orden,null=True,blank=True,on_delete=models.CASCADE)
     
-    FechaVenta = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    totalVenta = models.IntegerField(blank=True,null=True)
+    FechaVenta = models.DateField(auto_now_add=True, null=True, blank=True)
+    totalVenta = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE,blank=True, null=True)
     cantidad = models.IntegerField(null=True, blank=True)
     
@@ -242,30 +251,32 @@ class Venta(models.Model):
     estado = models.CharField(max_length=100,null=True,blank=True,choices=ESTADO_CHOICES,)
 
     def save(self, *args, **kwargs):
-
-        
-        # Actualizar la cantidad en stock del producto después de registrar la venta
         if self.estado == 'Aceptada':
-            producto =  self.cantidad * self.producto.precioComun 
-            servicio = self.cantidadservicio * self.servicio.precio
-            self.totalVenta = producto+servicio
-            # ACTUALIZAR EL STOCK
-            self.producto.canStock = self.producto.canStock - self.cantidad
-            self.producto.save()
+            producto_total = 0
+            servicio_total = 0
 
+            if self.cantidad > 0:
+                producto_total = self.cantidad * self.producto.precioComun 
+                if self.cantidad > self.producto.canStock:
+                    raise ValueError("La cantidad elegida es mayor que la cantidad en stock del producto.")
+                self.producto.canStock = self.producto.canStock - self.cantidad
+                self.producto.save()
 
+            if self.cantidadservicio > 0:
+                servicio_total = self.cantidadservicio * self.servicio.precio
 
-        if self.cantidad > self.producto.canStock:
-            raise ValueError("La cantidad elegida es mayor que la cantidad en stock del producto.")
+            self.totalVenta = producto_total + servicio_total
 
         super(Venta, self).save(*args, **kwargs)
+
+
     
     
 
 class Compra(models.Model):
     fechaCompra = models.DateField(auto_now_add=True,null=True, blank=True)
     
-    totalCompra = models.IntegerField( null=True, blank=True)
+    totalCompra = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     # ORDEN SE VA A ELIMINAR 
 
     #idOrden = models.ForeignKey(Orden,on_delete=models.CASCADE,null=True,blank=True)
@@ -354,7 +365,15 @@ class Herramienta(models.Model):
     marca = models.CharField(blank=True,null=True,max_length=100)
     fechaAdquisicion = models.DateField(blank=True,null=True)
     idProveedor = models.ForeignKey(Proveedor,on_delete=models.CASCADE,null=True,blank=True)
-    estadoHerramienta = models.CharField(blank=True,null=True,max_length=100)
+
+    ACTIVO = 'Activo'
+    DESACTIVADO = 'Desactivado'
+
+    ESTADO_CHOICES = [
+        (ACTIVO, 'Activo'),
+        (DESACTIVADO, 'Desactivado'),
+    ]
+    estadoHerramienta = models.CharField(blank=True,null=True,max_length=100,choices=ESTADO_CHOICES,)
     valor = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True,validators=[MinValueValidator(0)])
     notas = models.TextField(blank=True,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
@@ -385,7 +404,7 @@ class Mantenimiento(models.Model):
     tipoMantenimiento = models.CharField(max_length=100,null=True,blank=True,choices=ESTADO_CHOICES)
     # DEscripcionMantenimiento = Detalles
     detalles = models.CharField(max_length=100,null=True,blank=True)
-    costo = models.IntegerField(null=True,blank=True)
+    costo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     responsable = models.ForeignKey(Usuario,on_delete=models.CASCADE,null=True,blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
 

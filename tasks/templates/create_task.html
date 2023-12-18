@@ -16,34 +16,35 @@
                 {% csrf_token %}
 
                 <label for="title" class="form-label">Nombre de la tarea</label>
-                <input type="text" name="title" class="form-control" id="title" required>
+                <input type="text" name="title" class="form-control" id="title" >
                 <label for="description" class="form-label">Descripción</label>
-                <input type="text" name="description" class="form-control" id="description" required>
+                <input type="text" name="description" class="form-control" id="description" >
+                
                 <label for="datecompleted" class="form-label">Fecha tarea completada</label>
-                <input type="date" name="datecompleted" class="form-control" id="datecompleted" required>
+                <input type="date" name="datecompleted" class="form-control" id="datecompleted" >
                 <div class="form-check">
-                    <input type="checkbox" name="important" class="form-check-input" id="important" required> 
+                    <input type="checkbox" name="important" class="form-check-input" id="important" > 
                     <label for="important" class="form-check-label">Es importante</label>
                 </div>
                 <label for="estadotarea" class="form-label">Estado de la tarea</label>
-                <select name="estadotarea" id="estadotarea" class="form-select" required>
+                <select name="estadotarea" id="estadotarea" class="form-select" >
                     <option value="Iniciada">Iniciada</option>
                     <option value="Proceso">Proceso</option>
                 </select>
                 <label for="NotasTarea" class="form-label">Notas de tarea</label>
-                <input type="text" name="NotasTarea" class="form-control" id="NotasTarea" required>
+                <input type="text" name="NotasTarea" class="form-control" id="NotasTarea" >
                 <label for="Comentarios" class="form-label">Comentarios</label>
-                <input type="text" name="Comentarios" class="form-control" id="Comentarios" required>
+                <input type="text" name="Comentarios" class="form-control" id="Comentarios" >
                 
-                <!-- Este es un comentario en HTML.-->
+                <!-- Este es un comentario en HTML.
                 
                 <label for="empleado_asignado" class="form-label">Seleccione un empleado</label>
-                <select name="empleado_asignado" id="empleado_asignado" class="form-select" required>
+                <select name="empleado_asignado" id="empleado_asignado" class="form-select" >
                     {% for user in usuario %}
                         <option value="{{ user.id }}">{{ user.username }}</option>
                     {% endfor %}
                 </select>
-                
+                -->
                 <button type="submit" class="btn btn-primary mt-3">Guardar</button>
                 
                 

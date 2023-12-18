@@ -48,7 +48,7 @@
 
     </div>
 
-    <h1 class="text-center">Lista de tareas pendientes</h1>
+    <h1 class="text-center">Lista de tareas </h1>
 
     <main class="container">
         <div class="table-responsive rounded">
@@ -63,8 +63,9 @@
                         <th>Empleado asignado</th>
                         <th>Notas</th>
 
+                        <!-- 
                         <th>Usuario</th>
-
+                        -->
                         <th>Detalles</th>
                     </tr>
                 </thead>
@@ -78,8 +79,9 @@
                         <td>{{ task.datecompleted}}</td>
                         <td>{{ task.empleado_asignado}}</td>
                         <td>{{ task.NotasTarea}}</td>
+                        <!--
                         <td>{{ task.user.username }}</td>
-
+                        -->
                         <td><a href="{% url 'task_detail' task.id %}">Detalles</a></td>
                     </tr>
                     {% endfor %}

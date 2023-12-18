@@ -98,7 +98,7 @@ def home(request):
 
     # Configura el mensaje de correo
     subject = "¡Feliz Cumpleaños!"
-    message = "¡Feliz Cumpleaños! Te deseamos un día lleno de alegría dad."
+    message = "¡Feliz Cumpleaños! Te deseamos un día lleno de alegría."
     from_email = 'maao202378@upemor.edu.mx'  # Tu dirección de correo electrónico
 
     # Conecta al servidor SMTP y envía el correo
@@ -142,7 +142,7 @@ def home(request):
 
 
 
-
+'''
 #Esta funcion recibe la peticion del usuario, que nos dirige a la pagina de registro
 def signup(request):
     if request.method == 'GET':
@@ -153,8 +153,7 @@ def signup(request):
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
-                '''user = User.objects.create_user(username=request.POST['username'],
-                                                password=request.POST['password1'])'''
+               
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'], email=request.POST['email'])
 
                 user.save()
@@ -168,7 +167,47 @@ def signup(request):
         return render(request, 'signup.html', {
             "error": 'LAS CONTRASEÑAS NO COINCIDEN',
             'form': UserCreationForm
+        })'''
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+
+def signup(request):
+    if request.method == 'GET':
+        return render(request, 'signup.html', {'form': UserCreationForm})
+
+    else:
+        # Verificar si el correo electrónico ya está registrado
+        email = request.POST['email']
+        if User.objects.filter(email=email).exists():
+            return render(request, 'signup.html', {
+                "error": 'EL CORREO YA ESTÁ REGISTRADO',
+                'form': UserCreationForm
+            })
+
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                user = User.objects.create_user(
+                    username=request.POST['username'],
+                    password=request.POST['password1'],
+                    email=email  # Guardar el correo electrónico
+                )
+
+                user.save()
+                login(request, user)
+                return redirect('tasks')
+            except:
+                return render(request, 'signup.html', {
+                    "error": 'EL USUARIO YA EXISTE',
+                    'form': UserCreationForm
+                })
+        return render(request, 'signup.html', {
+            "error": 'LAS CONTRASEÑAS NO COINCIDEN',
+            'form': UserCreationForm
         })
+
 
         
 #Esta funcion recibe la peticion del usuario, y nos redirije a la pagina de home sin iniciar sesion 
@@ -274,7 +313,7 @@ def create_productos(request):
         except ValueError:
             return render(request, 'create_productos.html', {
                 'form': ProductoForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 # CHECAR ESTA FUNCION - que no esta leyendo objects.all()
@@ -314,7 +353,7 @@ def orden_detail(request, orden_id):
         form = OrdenForm(instance=orden)
     else:
         if orden.user != request.user:
-            return HttpResponseForbidden("No tienes permiso de acceder a esta pagina")
+            return HttpResponseForbidden("No tienes permiso de acceder a esta página")
         
         form = OrdenForm(instance=orden)
     if request.method =='POST':
@@ -358,7 +397,7 @@ def create_orden(request):
         except ValueError:
             return render(request,'create_ordenes.html',{
                 'form':OrdenForm,
-                'error':'Porfavor ingresa datos validos'
+                'error':'Porfavor ingresa datos válidos'
             })
 # USER
 
@@ -407,7 +446,7 @@ def user_detail(request, user_id):
 
         if user.user != request.user:
 
-            return HttpResponseForbidden("No tienes permiso para acceder a esta pagina")
+            return HttpResponseForbidden("No tienes permiso para acceder a esta página")
         
         form = UsuarioForm(instance=user)
         
@@ -440,7 +479,7 @@ def create_user(request):
         except ValueError:
             return render(request, 'create_user.html', {
                 'form': UsuarioForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 
@@ -516,7 +555,7 @@ def create_cliente(request):
         except ValueError:
             return render(request, 'create_cliente.html', {
                 'form': ClienteForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 
@@ -659,6 +698,8 @@ def create_ventas(request):
     productos = Producto.objects.all()
     servicios = Servicio.objects.all()
     
+    
+    
 
     if request.method == 'GET':
         return render(request,  'create_ventas.html', {
@@ -676,11 +717,12 @@ def create_ventas(request):
             new_venta = form.save(commit=False)
             new_venta.user = request.user
             new_venta.save()
+            
             return redirect('ventas')
         except ValueError:
             return render(request, 'create_ventas.html', {
                 'form': ventaForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 '''
@@ -753,7 +795,7 @@ def create_detalleventa(request):
         except ValueError:
             return render(request,'create_detalleventa.html',{
                 'form':DetalleVentaForm,
-                'error':'Porfavor ingresa datos validos'
+                'error':'Porfavor ingresa datos válidos'
             })
 
             '''
@@ -798,7 +840,7 @@ def compra_detail(request,compra_id):
         form = CompraForm(instance=compra)
     else:
         if compra.user != request.user:
-            return HttpResponseForbidden(" No tienes permiso para acceder a esta pagina.")
+            return HttpResponseForbidden(" No tienes permiso para acceder a esta página.")
         form = CompraForm(instance=compra)
 
     if request.method =='POST':
@@ -837,7 +879,7 @@ def create_compras(request):
         except ValueError:
             return render(request, 'create_compras.html', {
                 'form': CompraForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 #Esta funcion recibe la peticion del usuario y te arroja la pagina de los tickets. 
@@ -873,7 +915,7 @@ def ticket_detail(request,ticket_id):
         form = TicketForm(instance=ticket)
     else:
         if ticket.user != request.user:
-            return HttpResponseForbidden("No tienes permiso de acceder a esta pagina")
+            return HttpResponseForbidden("No tienes permiso de acceder a esta página")
         
         form = TicketForm(instance=ticket)
     if request.method =='POST':
@@ -908,7 +950,7 @@ def create_ticket(request):
         except ValueError:
             return render(request,'create_ticket.html',{
                 'form':TicketForm,
-                'error':'Porfavor ingresa datos validos'
+                'error':'Porfavor ingresa datos válidos'
             })
     
 
@@ -948,7 +990,7 @@ def incidentelaboral_detail(request,incidenteslaborales_id):
         form = IncidentesLaboralesForm(instance=incidentelaboral)
     else:
         if incidentelaboral.user != request.user:
-            return HttpResponseForbidden(" No tienes permiso para acceder a esta pagina.")
+            return HttpResponseForbidden(" No tienes permiso para acceder a esta página.")
         form = IncidentesLaboralesForm(instance=incidentelaboral)
 
     if request.method =='POST':
@@ -977,7 +1019,7 @@ def create_incidenteslaborales(request):
         except ValueError:
             return render(request, 'create_incidenteslaborales.html', {
                 'form': IncidentesLaboralesForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 #Esta funcion recibe la peticion del usuario y arroja la pagina de las opiniones. 
@@ -1049,7 +1091,7 @@ def create_opinion(request):
         except ValueError:
             return render(request, 'create_opinion.html', {
                 'form': OpionionForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 
@@ -1125,7 +1167,7 @@ def create_herramienta(request):
         except ValueError:
             return render(request, 'create_herramienta.html', {
                 'form': HerramientaForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 #Esta funcion recibe la peticion del usuario para visualizar los proveedores. 
@@ -1200,7 +1242,7 @@ def create_proveedor(request):
         except ValueError:
             return render(request, 'create_proveedor.html', {
                 'form': ProveedorForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 #Esta funcion recibe la peticion del usuario para la visualizacion de lo servicios. 
@@ -1235,7 +1277,7 @@ def create_servicio(request):
         except ValueError:
             return render(request, 'create_servicio.html', {
                 'form': ServicioForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 #Esta funcion recibe la peticion del usuario y el id del servicio para la eliminacion. 
@@ -1310,7 +1352,7 @@ def create_mantenimiento(request):
         except ValueError:
             return render(request, 'create_mantenimiento.html', {
                 'form': MantenimientoForm,
-                'error': 'Porfavor ingresar datos validos'
+                'error': 'Porfavor ingresar datos válidos'
             })
 
 #Esta funcion recibe la peticion del usuario y el id del mantenimiento para la eliminacion. 
