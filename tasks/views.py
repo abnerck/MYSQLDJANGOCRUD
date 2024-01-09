@@ -1429,7 +1429,7 @@ def backup_database(request):
 
 
 #Esta funcion recibe la peticion del usuario, para restablecer la base de datos. 
-def restore_database(request):
+'''def restore_database(request):
     if request.method == 'POST':
         form = RestoreForm(request.POST, request.FILES)
         if form.is_valid():
@@ -1442,6 +1442,29 @@ def restore_database(request):
 
             #return render(request, 'home.html')
             #return HttpResponse("La base de datos se restauro correctamente")
+            return JsonResponse({'message': 'La base de datos se restauró correctamente.'})
+
+    else:
+        form = RestoreForm()
+
+    return render(request, 'restore.html', {'form': form})'''
+
+def restore_database(request):
+    if request.method == 'POST':
+        form = RestoreForm(request.POST, request.FILES)
+        if form.is_valid():
+            backup_file = request.FILES['backup_file']
+            
+            # Verifica si la extensión del archivo es ".sqlite3"
+            if not backup_file.name.endswith('.sqlite3'):
+                return JsonResponse({'error': 'Por favor, selecciona un archivo con extensión .sqlite3.'}, status=400)
+
+            backup_data = backup_file.read()  # Lee los datos del archivo
+
+            # Guarda los datos del respaldo en el archivo de la base de datos
+            with open('db.sqlite3', 'wb') as db_file:
+                db_file.write(backup_data)
+
             return JsonResponse({'message': 'La base de datos se restauró correctamente.'})
 
     else:

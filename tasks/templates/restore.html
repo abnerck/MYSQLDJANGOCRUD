@@ -12,9 +12,9 @@
                 {% csrf_token %}
                 <div class="mb-3">
                     {{ form.as_p }}
+                    <div id="file-error-message" class="text-danger"></div>
                 </div>
                 <button type="submit" class="btn btn-danger">Restaurar base de datos</button>
-
             </form>
 
             <a href="/" class="btn btn-primary mt-3">Volver al inicio</a>
@@ -25,6 +25,22 @@
         </div>
     </div>
 
+    <script>
+        document.getElementById('id_backup_file').addEventListener('change', function() {
+            var fileInput = this;
+            var errorMessage = document.getElementById('file-error-message');
+            
+            if (fileInput.files.length > 0) {
+                var fileName = fileInput.files[0].name;
+                if (!fileName.endsWith('.sqlite3')) {
+                    errorMessage.innerHTML = 'Por favor, selecciona un archivo con extensión .sqlite3.';
+                    fileInput.value = '';  // Limpiar el valor del campo de archivo
+                } else {
+                    errorMessage.innerHTML = '';  // Limpiar el mensaje de error
+                }
+            }
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('restore-form');
