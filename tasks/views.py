@@ -489,11 +489,12 @@ def create_user(request):
 # Esta funcion sirve para ver todos los clientes si eres super usuario
 @login_required
 def clientes(request):
+    
     if request.user.is_superuser:
         clientes = Cliente.objects.all().order_by('nombre')
     else:
-
-        clientes = Cliente.objects.filter(user=request.user).order_by('nombre')
+        clientes = Cliente.objects.all()
+        #clientes = Cliente.objects.filter(user=request.user).order_by('nombre')
     
     return render(request, 'clientes.html', {
         'clientes': clientes,
@@ -1153,9 +1154,12 @@ def delete_herramientas(request,herramienta_id):
 #Esta funcion recibe la peticion del usuario y el formulario para la creacion de la herramienta. 
 @login_required
 def create_herramienta(request):
+    provedores = Proveedor.objects.all()
+    
     if request.method == 'GET':
         return render(request, 'create_herramienta.html', {
-            'form': HerramientaForm
+            'form': HerramientaForm,
+            'provedores':provedores
         })
     else:
         try:

@@ -54,7 +54,8 @@ class Task(models.Model):
     estadotarea = models.CharField(max_length=100, blank=True, null=True, choices=ESTADO_CHOICES,)
 
     # INVESTIGAR LA LLAVE FORANEA DE ESTA TABLA.
-    empleado_asignado = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
+    #empleado_asignado = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     NotasTarea = models.CharField(max_length=100,blank=True, null=True)
     Comentarios = models.CharField(max_length=100, blank=True, null=True)

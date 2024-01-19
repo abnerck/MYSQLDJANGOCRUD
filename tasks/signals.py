@@ -32,7 +32,7 @@ def user_logged_in_handler(sender, request, user, **kwargs):
     # INICIO DE SESION 
     # Compara la fecha de last_login del usuario con la fecha actual
     if user.last_login and user.last_login.date() == current_date:
-        print(" AY PINCHE PERRO ")
+        
         subject = "Inicio de sesión de usuario"
         message = f"El usuario {user.username} ha iniciado sesión en la aplicación."
         from_email = "abnerck9@gmail.com"  # Tu dirección de correo electrónico.

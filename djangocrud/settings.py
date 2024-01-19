@@ -106,7 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
+
 
 TIME_ZONE = 'UTC'
 
@@ -133,3 +134,10 @@ EMAIL_PORT = 587  # Puerto de SMTP de Gmail
 EMAIL_USE_TLS = True  # Utiliza TLS para conexiones seguras
 EMAIL_HOST_USER = 'maao202378@upemor.edu.mx'  # Tu dirección de correo electrónico de Gmail
 EMAIL_HOST_PASSWORD = 'Guapango0212'  # La contraseña de tu correo electrónico de Gmail
+
+# settings.py
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+SESSION_COOKIE_AGE = 1800  # 30 minutos en segundos

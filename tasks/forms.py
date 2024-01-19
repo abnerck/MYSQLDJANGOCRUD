@@ -4,7 +4,7 @@ from .models import Task, Usuario, Producto, Cliente,Orden,Venta,Compra,Ticket,I
 class TaksForm(ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description','datecompleted','important','estadotarea','NotasTarea','Comentarios','empleado_asignado',]
+        fields = ['title', 'description','datecompleted','important','estadotarea','NotasTarea','Comentarios',]
         labels ={
             'title': 'Nombre de la tarea',
             'description' : 'Descripcion',
