@@ -72,7 +72,7 @@ def home(request):
 
     #total = Usuario.objects.filter(date_joined__gte=cutoff_date).count()
     #total = Usuario.objects.filter(tipo='Administrador').count()
-    usr = Usuario.objects.latest('date_joined')   
+    #usr = Usuario.objects.latest('date_joined')   
 
     newproduct = Producto.objects.filter(visto=False).count()
     newventa = Venta.objects.filter(visto=False).count()
@@ -133,7 +133,7 @@ def home(request):
     #print(usr)
     return render(request, 'home.html',{
         #'total':total,
-        'usr':usr,
+        #'usr':usr,
         'newproduct':newproduct,
         'newventa':newventa,
         'hbd':hbd
@@ -239,7 +239,7 @@ def signin(request):
 def productos(request):
     newventa = Venta.objects.filter(visto=False).count()
     newproduct = Producto.objects.filter(visto=False).count()
-    print(newproduct)
+    
     if request.user.is_superuser:
         productos = Producto.objects.all().order_by('nombre')
         
@@ -279,9 +279,9 @@ def producto_detail(request, producto_id):
         # Si el usuario no es un superusuario, verificar si es el propietario del producto
         if producto.user != request.user:
             # Si el usuario no es el propietario, no tiene permiso para acceder a la vista
-            return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
+            form = ProductoForm(instance=producto)
 
-        form = ProductoForm(instance=producto)
+        
 
     if request.method == 'POST':
         form = ProductoForm(request.POST, instance=producto)
@@ -490,11 +490,12 @@ def create_user(request):
 @login_required
 def clientes(request):
     
+    
     if request.user.is_superuser:
-        clientes = Cliente.objects.all().order_by('nombre')
+        clientes = Cliente.objects.all()
     else:
         clientes = Cliente.objects.all()
-        #clientes = Cliente.objects.filter(user=request.user).order_by('nombre')
+        
     
     return render(request, 'clientes.html', {
         'clientes': clientes,
@@ -509,8 +510,8 @@ def cliente_detail(request, cliente_id):
         form = ClienteForm(instance=cliente)
         
     else:
-        if cliente.user != request.user:
-            return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
+        #if cliente.user != request.user:
+        #   return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
 
         form = ClienteForm(instance=cliente)
 
@@ -565,8 +566,8 @@ def create_cliente(request):
 #TAREAS
 @login_required
 def tasks(request):
-        
-    tasks = Task.objects.filter(user=request.user, datecompleted__isnull =True)
+    tasks = Task.objects.filter(user=request.user)
+    #tasks = Task.objects.filter(user=request.user, datecompleted__isnull =True)
     return render(request, 'tasks.html', {
         'tasks': tasks,
 
@@ -1121,8 +1122,8 @@ def herramienta_detail(request, herramienta_id):
     if request.user.is_superuser:
         form = HerramientaForm(instance=herramienta)
     else:
-        if herramienta.user != request.user:
-            return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
+        #if herramienta.user != request.user:
+        #    return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
 
         form = HerramientaForm(instance=herramienta)
 
@@ -1196,8 +1197,8 @@ def proveedor_detail(request, proveedor_id):
     if request.user.is_superuser:
         form = ProveedorForm(instance=proveedor)
     else:
-        if proveedor.user != request.user:
-            return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
+        #if proveedor.user != request.user:
+        #    return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
 
         form = ProveedorForm(instance=proveedor)
 
@@ -1306,8 +1307,8 @@ def servicio_detail(request, servicio_id):
     if request.user.is_superuser:
         form = ServicioForm(instance=servicio)
     else:
-        if servicio.user != request.user:
-            return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
+        #if servicio.user != request.user:
+        #    return HttpResponseForbidden("No tienes permiso para acceder a esta página.")
 
         form = ServicioForm(instance=servicio)
 
@@ -1340,11 +1341,12 @@ def mantenimiento(request):
 def create_mantenimiento(request):
     herramientas = Herramienta.objects.all()
     users = User.objects.all()
+
     if request.method == 'GET':
         return render(request, 'create_mantenimiento.html', {
             'form': MantenimientoForm,
             'herramientas':herramientas,
-            'users':users
+            'users':users  
         })
     else:
         try:

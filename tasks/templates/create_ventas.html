@@ -15,8 +15,8 @@
                 <h2>Producto</h2>
             </center>
                 <p>
-                    <label for="id_producto" class="form-label">Producto:</label>
-                    <select name="producto" id="id_producto" class="form-select">
+                    <label for="id_producto" class="form-label" >Producto:</label>
+                    <select name="producto" id="id_producto" class="form-select" required>
                   <option value="" selected>Selecciona</option>
                   {% for a in productos %}
 
@@ -65,6 +65,7 @@
                 {% if user.is_superuser or user.is_staff  %}
                 <label for="estado" class="form-label">Estado:</label>
                 <select name="estado" id="estado" class="form-select">
+                    <option value="Selecciona">Seleccione</option>
                     <option value="Aceptada" >Aceptada</option>
                     <option value="Rechazada" >Rechazada</option>
 

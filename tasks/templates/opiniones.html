@@ -20,8 +20,9 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Correo</th>
-                    <th>usuario</th>
-                    <th>calificación</th>
+                    <th>Usuario</th>
+                    <th>Tipo</th>
+                    <th>calificación del servicio</th>
                     <th>Fecha</th>
                     {% if user.is_superuser or user.is_staff %}
                     <th>Detalle</th>
@@ -35,6 +36,7 @@
                 <tr>
                     <td>{{ opinion.Correo }}</td>                   
                     <td>{{ opinion.user.username}}</td>
+                    <td>{{ opinion.tipo}}</td>
                     <td>{{ opinion.calificacion}}</td>
                     <td>{{ opinion.FechaRegistro}}</td>
                     {% if user.is_superuser or user.is_staff %}

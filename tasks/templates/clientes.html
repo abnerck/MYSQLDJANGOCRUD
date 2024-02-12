@@ -116,6 +116,8 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Nombre</th>
+                        <th>Apellido paterno</th>
+                        <th>Apellido materno</th>
                         <th>Tipo</th>
                         <th>Correo</th>
                         <th>Fecha de cumpleaños</th>
@@ -128,6 +130,8 @@
                     {% for cliente in clientes %}
                     <tr>
                         <td>{{ cliente.nombre }}</td>
+                        <td>{{ cliente.paterno }}</td>
+                        <td>{{ cliente.materno }}</td>
                         <td>{{ cliente.tipocliente }}</td>
                         <td>{{ cliente.correo }}</td>
                         <td>{{ cliente.fechanacimiento}}</td>

@@ -31,13 +31,14 @@
                             Actualizar
                         </button>
                     </form>
-    
+                    <!--
                     <form action="{% url 'complete_task' task.id %}" method="POST">
                         {% csrf_token %}
                         <button class="btn btn-success"> 
                             Completar
                         </button>
                     </form>
+                    -->
                     {% if user.is_superuser  %}
                     <form id="deleteForm" action="{% url 'delete_task' task.id %}" method="POST">
                         {% csrf_token %}

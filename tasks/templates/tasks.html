@@ -13,7 +13,9 @@
 
         <a href="/tasks/create/" class="btn btn-danger mt-3">Crear nueva tarea</a>
         <br>
+        <!--
         <a href="/tasks_completed/" class="btn btn-primary mt-3">Tarea hechas</a>
+        -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css"
             href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
@@ -59,7 +61,7 @@
                         <th>Descripción</th>
                         <th>Estado de tarea</th>
                         <th>Creado</th>
-                        <th>Terminada</th>
+                        <!--<th>Terminada</th>
                         <!--
                         <th>Empleado asignado</th>
                         -->
@@ -78,8 +80,8 @@
                         <td>{{ task.description }}</td>
                         <td>{{ task.estadotarea}}</td>
                         <td>{{ task.created}}</td>
-                        <td>{{ task.datecompleted}}</td>
-                        <!--
+                        <!--<td>{{ task.datecompleted}}</td>
+                        
                         <td>{{ task.empleado_asignado}}</td>-->
                         <td>{{ task.NotasTarea}}</td>
                         <!--

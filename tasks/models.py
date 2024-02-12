@@ -36,7 +36,9 @@ class Task(models.Model):
     description = models.CharField(max_length=2000, blank=True)
     
     # ESTDOS DOS DATOS SON MEDIOS CONFUsos
-    created = models.DateTimeField(auto_now_add=True)
+    
+    created = models.DateField(auto_now_add=True)
+    FechaRegistro = models.DateField(auto_now_add=True,blank=True,null=True)
     
     datecompleted = models.DateTimeField(blank=True, null=True)
     #
@@ -46,10 +48,12 @@ class Task(models.Model):
 
     INICIADA = 'Iniciada'
     PROCESO = 'Proceso'
+    TERMINADA = 'Terminada'
 
     ESTADO_CHOICES = [
         (INICIADA, 'Iniciada'),
         (PROCESO, 'Proceso'),
+        (TERMINADA,'Terminada'),
     ]
     estadotarea = models.CharField(max_length=100, blank=True, null=True, choices=ESTADO_CHOICES,)
 
@@ -72,7 +76,7 @@ class Proveedor(models.Model):
 
     nombre = models.CharField(blank=True,null=True,max_length=100)
     correo = models.EmailField(blank=True,null=True)
-    telefono = models.CharField(blank=True,null=True,max_length=100)
+    telefono = models.CharField(blank=True,null=True,max_length=10)
 
     ACTIVO = 'Activo'
     DESACTIVADO = 'Desactivado'
@@ -131,6 +135,8 @@ class Producto(models.Model):
     # DE AQUI NO HAY NADA PENDIENTE
 class Cliente(models.Model):
     nombre = models.CharField(max_length=50)
+    paterno = models.CharField(max_length=50)
+    materno = models.CharField(max_length=50)
 
     MAYORISTA = 'Mayorista'
     COMUN = 'Menudista'
@@ -319,11 +325,20 @@ class Ticket(models.Model):
 
 class IncidenteLaboral(models.Model):
 
-    horaIncidente = models.TimeField(blank=True,null=True)
+    INTERNO = 'Interno'
+    EXTERNO = 'Externo'
+
+    ESTADO_CHOICES = [
+        (INTERNO,'Interno'),
+        (EXTERNO,'Externo'),
+        ]
+    horaIncidente = models.DateTimeField(blank=True,null=True)
+
+    
     descripcion = models.CharField(max_length=100,blank=True,null=True)
     
     reportadopor = models.CharField(max_length=100,blank=True,null=True)
-    tipoIncidente = models.CharField(max_length=100,blank=True,null=True)
+    tipoIncidente = models.CharField(max_length=100,blank=True,null=True,choices=ESTADO_CHOICES)
     accionesCorrectivas = models.CharField(max_length=100,blank=True,null=True)
     comentarios = models.TextField(blank=True,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
@@ -332,7 +347,7 @@ class IncidenteLaboral(models.Model):
 
 class Opionion(models.Model):
     QUEJA = 'Queja'
-    OPINION = 'Opinion'
+    OPINION = ' '
     SUGERENCIA = 'Sugerencia'
 
     ESTADO_CHOICES = [
@@ -406,8 +421,8 @@ class Mantenimiento(models.Model):
     # DEscripcionMantenimiento = Detalles
     detalles = models.CharField(max_length=100,null=True,blank=True)
     costo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    responsable = models.ForeignKey(Usuario,on_delete=models.CASCADE,null=True,blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
+    responsable = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='responsable_mantenimientos')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='creador_mantenimientos')
 
     def __str__(self):
         return self.responsable

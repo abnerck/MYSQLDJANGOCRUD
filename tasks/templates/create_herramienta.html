@@ -75,8 +75,9 @@ function validarFechaNacimiento() {
             
               
               
-                <label for="id_idProveedor" class="form-label">Proveedor:</label>
+                <label for="id_idProveedor" class="form-label">*Proveedor:</label>
                 <select name="idProveedor" id="id_idProveedor" class="form-select" required>
+                    <option value="Seleccione">Seleccione</option>
                     {% for proveedor in provedores %}
                     <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
                     {% endfor %}

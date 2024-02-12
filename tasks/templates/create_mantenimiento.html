@@ -15,6 +15,7 @@
 
                 <label for="id_idHerramienta" class="form-label">Herramientas:</label>
                 <select name="idHerramienta" id="id_idHerramienta" class="form-select">
+                    <option value="Selecciona">Seleccione</option>
                     {% for herramienta in herramientas %}
                     <option value="{{ herramienta.id}}" selected>{{ herramienta.nombreHerramienta}}</option>
                     {% endfor %}
@@ -37,6 +38,7 @@
                 <p>
                     <label for="id_tipoMantenimiento" class="form-label">Tipo mantenimiento:</label>
                     <select name="tipoMantenimiento" id="id_tipoMantenimiento" class="form-select">
+                        <option value="Selecciona">Seleccione</option>
                         <option value="Correctivo" selected>Correctivo</option>
                         <option value="Preventivo" selected>Preventivo</option>
                         <option value="Predictivo" selected>Predictivo</option>
@@ -49,7 +51,7 @@
 
                 <p>
                     <label for="id_detalles" class="form-label" class="form-label">Detalles:</label>
-                    <input type="text" name="detalles" maxlength="100" id="id_detalles" class="form-control">
+                    <input type="text" name="detalles" maxlength="100" id="id_detalles" class="form-control" required>
 
 
                 </p>
@@ -65,8 +67,8 @@
 
                 <p>
                     <label for="id_responsable" class="form-label" class="form-label">Responsable:</label>
-                    <select name="id" id="id_responsable" class="form-select">
-                        
+                    <select name="responsable" id="id_responsable" class="form-select">
+                        <option value="Selecciona">Seleccione</option>
                         {% for user in users %}
                         <option value="{{ user.id}}" selected>{{ user.username}}</option>
                         {% endfor %}

@@ -20,16 +20,20 @@
                 <label for="description" class="form-label">Descripción</label>
                 <input type="text" name="description" class="form-control" id="description" >
                 
+                <!--
                 <label for="datecompleted" class="form-label">Fecha tarea completada</label>
                 <input type="date" name="datecompleted" class="form-control" id="datecompleted" >
+                -->
                 <div class="form-check">
                     <input type="checkbox" name="important" class="form-check-input" id="important" > 
                     <label for="important" class="form-check-label">Es importante</label>
                 </div>
                 <label for="estadotarea" class="form-label">Estado de la tarea</label>
                 <select name="estadotarea" id="estadotarea" class="form-select" >
+                    <option value="seleccione">Seleccione</option>
                     <option value="Iniciada">Iniciada</option>
                     <option value="Proceso">Proceso</option>
+                    <option value="Terminada">Terminada</option>
                 </select>
                 <label for="NotasTarea" class="form-label">Notas de tarea</label>
                 <input type="text" name="NotasTarea" class="form-control" id="NotasTarea" >

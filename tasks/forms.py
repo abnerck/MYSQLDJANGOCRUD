@@ -4,7 +4,7 @@ from .models import Task, Usuario, Producto, Cliente,Orden,Venta,Compra,Ticket,I
 class TaksForm(ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description','datecompleted','important','estadotarea','NotasTarea','Comentarios',]
+        fields = ['title', 'description','important','estadotarea','NotasTarea','Comentarios',]
         labels ={
             'title': 'Nombre de la tarea',
             'description' : 'Descripcion',
@@ -37,7 +37,7 @@ class ClienteForm(ModelForm):
     class Meta:
         model = Cliente
         #Checar el campo fechanacimiento que quite. 
-        fields = ['nombre','tipocliente','fechanacimiento','correo','celular','referencias','direccion',]
+        fields = ['nombre','paterno','materno','tipocliente','fechanacimiento','correo','celular','referencias','direccion',]
         labels = { 
             'fechanacimiento':'Fecha de Nacimiento',
             'tipocliente':'Tipo de cliente'
@@ -135,8 +135,9 @@ class IncidentesLaboralesForm(ModelForm):
         fields = ['horaIncidente','descripcion','tipoIncidente','accionesCorrectivas','comentarios']
         #fields = ['horaIncidente','descripcion','reportadopor','tipoIncidente','accionesCorrectivas','comentarios']
         labels = {
+            'horaIncidente':'Hora del incidente',
             'HoraIncidente':'Hora de Incidente',
-            'descripcion':'Descripcion',
+            'descripcion':'Descripción',
             'reportadopor':'Reportado Por',
             'tipoIncidente':'Tipo Incidente',
             'accionesCorrectivas':'Acciones correctivas',
@@ -197,7 +198,7 @@ class ServicioForm(ModelForm):
             'descripcion':'Descripcion',
             'precio':'Precio',
             
-            'tiempoestimado':'Timepo Estimado',
+            'tiempoestimado':'Tiempo Estimado',
             'categoria':'Categoria',
             'notas':'Notas',
             'estadoServicio':'Estado Servicio'
@@ -210,7 +211,7 @@ class MantenimientoForm(ModelForm):
 
         fields = ['idHerramienta','fechaMantenimineto','tipoMantenimiento','detalles','costo','responsable',]
         labels = {
-            'idHerramienta':'id Herramientas',
+            'idHerramienta':'Herramientas',
             'fechaMantenimineto':'Fecha de Mantenimiento',
             'tipoMantenimiento':'Tipo Mantenimiento',
             'detalles':'Detalles',

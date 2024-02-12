@@ -15,8 +15,8 @@
         
                 
                   <label for="idProducto" class="form-label">Producto:</label>
-                  <select name="idProducto" id="idProducto" class="form-select">
-                    <option value="selecciona">selecciona</option>
+                  <select name="idProducto" id="idProducto" class="form-select" required>
+                    <option value="Selecciona">Seleccione</option>
                     {% for producto in productos %}
                 <option value="{{ producto.id}}">{{ producto.nombre}}</option>
              {% endfor %}
@@ -25,8 +25,8 @@
                   
                   <p>
                     <label for="idProveedor" class="form-label">Proveedor:</label>
-                    <select name="idProveedor" id="idProveedor" class="form-select">
-                      <option value="selecciona">selecciona</option>
+                    <select name="idProveedor" id="idProveedor" class="form-select" required>
+                      <option value="Selecciona">Seleccione</option>
                   {% for provedor in provedores %}
                   <option value="{{ provedor.id}}"> {{ provedor.nombre}} </option>
                   {% endfor %}  

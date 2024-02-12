@@ -12,8 +12,29 @@
             <form action="/incidenteslaborales/create/" method="post">
                 {% csrf_token %}
         
-                <label for="id_horaIncidente" class="form-label">Hora Incidente:</label>
-                <input type="text" name="horaIncidente" id="id_horaIncidente" class="form-control" required value="HH:MM:SS">
+                
+
+           
+
+                <label for="id_horaIncidente" class="form-label">Fecha y Hora del Incidente:</label>
+                <input type="datetime-local" name="horaIncidente" id="id_horaIncidente" class="form-control" required>
+                
+                <script>
+                document.getElementById('id_horaIncidente').addEventListener('input', function() {
+                    var inputFecha = document.getElementById('id_horaIncidente');
+                    var fechaIncidente = new Date(inputFecha.value);
+                    var fechaActual = new Date();
+                
+                    // Compara la fecha del incidente con la fecha actual
+                    if (fechaIncidente > fechaActual) {
+                        inputFecha.setCustomValidity('La fecha y hora del incidente no pueden ser mayores a la fecha y hora actuales.');
+                    } else {
+                        inputFecha.setCustomValidity('');
+                    }
+                });
+                </script>
+        
+
 
                 <label for="id_descripcion" class="form-label">Descripción:</label>
                 <input type="text" name="descripcion" maxlength="100" id="id_descripcion" class="form-control" required> 
