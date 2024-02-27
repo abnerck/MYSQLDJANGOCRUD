@@ -73,7 +73,7 @@
                     table.rows({ search: 'applied' }).data().each(function (value, index) {
                         totalstock += parseFloat(value[0]);
                     });
-                    return totalstock.toFixed(2);
+                    return totalstock.toFixed(0);
                 }
             });
         </script>

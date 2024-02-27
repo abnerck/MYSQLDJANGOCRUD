@@ -86,7 +86,7 @@
                     table
                         .columns(0)
                         .search($('#filtroCliente').val())
-                        .columns(1)
+                        .columns(3)
                         .search($('#filtroTipo').val())
                         .draw();
                 });
@@ -95,7 +95,7 @@
                     var mayoristas = 0;
                     table.rows({ search: 'applied' }).data().each(function (value, index) {
 
-                        if (value[1] === 'Mayorista') {
+                        if (value[3] === 'Mayorista') {
                             mayoristas++;
                         }
                     });

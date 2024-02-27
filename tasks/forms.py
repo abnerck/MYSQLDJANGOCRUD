@@ -39,7 +39,7 @@ class ClienteForm(ModelForm):
         #Checar el campo fechanacimiento que quite. 
         fields = ['nombre','paterno','materno','tipocliente','fechanacimiento','correo','celular','referencias','direccion',]
         labels = { 
-            'fechanacimiento':'Fecha de Nacimiento',
+            'fechanacimiento':'Fecha de nacimiento',
             'tipocliente':'Tipo de cliente'
             }
 
@@ -51,7 +51,7 @@ class OrdenForm(ModelForm):
         'subtotalProductos','cantidadServicios','precioUnitarioServicios','subtotalServicio',]
                   
         labels = {
-            'tipoOrden':'Tipo de Orden',
+            'tipoOrden':'Tipo de orden',
             'descripcion':'Descripcion',
             'totalOrden':'Total orden',
             'idCliente':'Cliente',
@@ -79,7 +79,7 @@ class ventaForm(ModelForm):
         labels = {
             'descripcion':'Descripcion',
             'idOrden':'Orden',
-            'totalVenta':'Total Venta',
+            'totalVenta':'Total venta',
             'idCliente':'Cliente',
             'idEmpleado':'Empleado'
         }
@@ -125,7 +125,7 @@ class TicketForm(ModelForm):
             'descripcion':'Descripcion',
             'idCliente':'Cliente',
             'idEmpleado':'Empleado',
-            'estadoTicket':'Estado de Ticket'
+            'estadoTicket':'Estado de ticket'
         }
 
 class IncidentesLaboralesForm(ModelForm):
@@ -136,10 +136,10 @@ class IncidentesLaboralesForm(ModelForm):
         #fields = ['horaIncidente','descripcion','reportadopor','tipoIncidente','accionesCorrectivas','comentarios']
         labels = {
             'horaIncidente':'Hora del incidente',
-            'HoraIncidente':'Hora de Incidente',
+            'HoraIncidente':'Hora de incidente',
             'descripcion':'Descripción',
             'reportadopor':'Reportado Por',
-            'tipoIncidente':'Tipo Incidente',
+            'tipoIncidente':'Tipo incidente',
             'accionesCorrectivas':'Acciones correctivas',
             'comentarios':'Comentarios'
         }
@@ -152,7 +152,7 @@ class OpionionForm(ModelForm):
         fields = ['Correo','tipo','descripcion','calificacion']
         labels = {
             'Correo':'Correo',
-            'FechaRegistro':'Fecha de Registro',
+            'FechaRegistro':'Fecha de registro',
             'tipo':'Tipo',
             'descripcion':'Descripcion',
             'calificacion':'Calificacion'
@@ -164,11 +164,11 @@ class HerramientaForm(ModelForm):
 
         fields = ['nombreHerramienta','tipo','marca','fechaAdquisicion','idProveedor','estadoHerramienta','valor','notas']
         labels = {
-            'nombreHerramienta':'Nombre Herramienta',
+            'nombreHerramienta':'Nombre herramienta',
             'marca':'Marca',
-            'fechaAdquisicion':'Fecha Adquisicion',
+            'fechaAdquisicion':'Fecha adquisicion',
             'proveedor':'Proveedor',
-            'estadoHerramienta':'Estado de la Herramienta',
+            'estadoHerramienta':'Estado de la herramienta',
             'valor':'Valor',
             'notas':'Notas',
             'idProveedor':'Proveedor'
@@ -198,10 +198,10 @@ class ServicioForm(ModelForm):
             'descripcion':'Descripcion',
             'precio':'Precio',
             
-            'tiempoestimado':'Tiempo Estimado',
+            'tiempoestimado':'Tiempo estimado',
             'categoria':'Categoria',
             'notas':'Notas',
-            'estadoServicio':'Estado Servicio'
+            'estadoServicio':'Estado servicio'
         }
         
 
@@ -212,8 +212,8 @@ class MantenimientoForm(ModelForm):
         fields = ['idHerramienta','fechaMantenimineto','tipoMantenimiento','detalles','costo','responsable',]
         labels = {
             'idHerramienta':'Herramientas',
-            'fechaMantenimineto':'Fecha de Mantenimiento',
-            'tipoMantenimiento':'Tipo Mantenimiento',
+            'fechaMantenimineto':'Fecha de mantenimiento',
+            'tipoMantenimiento':'Tipo mantenimiento',
             'detalles':'Detalles',
             'costo':'Costo',
             'responsable':'Responsable'
