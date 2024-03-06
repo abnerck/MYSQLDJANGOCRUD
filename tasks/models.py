@@ -396,7 +396,7 @@ class Herramienta(models.Model):
 
 
     def __str__(self):
-        return self.marca
+        return self.nombreHerramienta
 
 
 

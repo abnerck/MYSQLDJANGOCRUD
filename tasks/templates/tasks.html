@@ -63,8 +63,9 @@
                         <th>Creado</th>
                         <!--<th>Terminada</th>
                         <!--
-                        <th>Empleado asignado</th>
+                        
                         -->
+                        <th>Empleado asignado</th>
                         <th>Notas</th>
 
                         <!-- 
@@ -82,7 +83,8 @@
                         <td>{{ task.created}}</td>
                         <!--<td>{{ task.datecompleted}}</td>
                         
-                        <td>{{ task.empleado_asignado}}</td>-->
+                        -->
+                        <td>{{ task.user.username}}</td>
                         <td>{{ task.NotasTarea}}</td>
                         <!--
                         <td>{{ task.user.username }}</td>
@@ -167,7 +169,7 @@
 
         $('#filtroEmpleado, #filtroEstado').on('keyup', function () {
             table
-                .columns(5)
+                .columns(4)
                 .search($('#filtroEmpleado').val())
                 .columns(2)
                 .search($('#filtroEstado').val())

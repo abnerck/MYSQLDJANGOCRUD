@@ -18,14 +18,14 @@ def user_logged_in_handler(sender, request, user, **kwargs):
     if user.date_joined and user.date_joined.date() == current_date:
         subject = "Registro nuevo"
         message = f"Se ha registrado un nuevo usuario:  {user.username} ."
-        from_email = "abnerck9@gmail.com"  # Tu dirección de correo electrónico.
+        from_email = "mextlikallimprenta@gmail.com"  # Tu dirección de correo electrónico.
         recipient_list = [superuser.email]
         #recipient_list = ['egio201757@upemor.edu.mx']
         try:
             send_mail(subject, message, from_email, recipient_list)
             print("Correo electrónico de notificación enviado correctamente.")
         except Exception as e:
-            print(f"Error al enviar correo: {str(e)}")
+            print(f"Errorsito al enviar correo: {str(e)}")
 
 
 
@@ -35,7 +35,7 @@ def user_logged_in_handler(sender, request, user, **kwargs):
         
         subject = "Inicio de sesión de usuario"
         message = f"El usuario {user.username} ha iniciado sesión en la aplicación."
-        from_email = "abnerck9@gmail.com"  # Tu dirección de correo electrónico.
+        from_email = "mextlikallimprenta@gmail.com"  # Tu dirección de correo electrónico.
         recipient_list = [superuser.email]
 
         

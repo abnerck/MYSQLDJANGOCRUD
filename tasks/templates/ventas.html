@@ -187,15 +187,17 @@
             return totalVentas.toFixed(2);
         }
     });
+    
     document.addEventListener('DOMContentLoaded', function () {
     var ctx = document.getElementById('graficaVentas').getContext('2d');
 
     var data = {
-      labels: [{% for venta in ventas %}"{{ venta.idCliente }}",{% endfor %}],
+      labels: [{% for venta in ventas %}"{{ venta.producto }}",{% endfor %}],
       datasets: [{
         label: 'Total Venta',
+        
         data: [{% for venta in ventas %}{{ venta.totalVenta }},{% endfor %}],
-        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo más oscuro
+        backgroundColor: 'rgba(0)', // Color de fondo más oscuro
         borderColor: 'rgba(54, 162, 235, 1)', // Borde de las barras más oscuro
         borderWidth: 1
       }]
@@ -215,6 +217,7 @@
       options: options
     });
   });
+    
 </script>
 
 {% endblock %}

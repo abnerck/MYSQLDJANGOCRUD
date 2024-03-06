@@ -99,15 +99,15 @@ def home(request):
     # Configura el mensaje de correo
     subject = "¡Feliz Cumpleaños!"
     message = "¡Feliz Cumpleaños! Te deseamos un día lleno de alegría."
-    from_email = 'maao202378@upemor.edu.mx'  # Tu dirección de correo electrónico
+    from_email = 'mextlikallimprenta@gmail.com'  # Tu dirección de correo electrónico
 
     # Conecta al servidor SMTP y envía el correo
     try:
         # Utiliza la configuración de settings.py para el servidor SMTP
         smtp_server = 'smtp.gmail.com'  # Servidor SMTP de Gmail
         smtp_port = 587  # Puerto de SMTP de Gmail
-        smtp_username = 'maao202378@upemor.edu.mx'  # Tu dirección de correo electrónico
-        smtp_password = 'Guapango0212'  # Tu contraseña de correo electrónico
+        smtp_username = 'mextlikallimprenta@gmail.com'  # Tu dirección de correo electrónico
+        smtp_password = 'kele hlth xevg swxn'  # Tu contraseña de correo electrónico
 
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()
