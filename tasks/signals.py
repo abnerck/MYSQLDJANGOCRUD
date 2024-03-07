@@ -45,3 +45,4 @@ def user_logged_in_handler(sender, request, user, **kwargs):
             print("Correo electrónico de notificación enviado correctamente.")
         except Exception as e:
             print(f"Error al enviar correo: {str(e)}")
+    
