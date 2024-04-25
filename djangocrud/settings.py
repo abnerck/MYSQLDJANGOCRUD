@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
     }
 }'''
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
@@ -94,7 +94,19 @@ DATABASES = {
         'HOST': 'monorail.proxy.rlwy.net',   # Puede cambiar según la configuración de tu servidor MySQL
         'PORT': '51195',        # Puede cambiar según la configuración de tu servidor MySQL
     }
+}'''
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'djangocrud',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
+
 
 
 ALLOWED_HOSTS = ['*']
