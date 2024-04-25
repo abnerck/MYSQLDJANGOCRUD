@@ -1,2 +1,1 @@
-web: python manage.py migrate && gunicorn djangocrud.wsgi
-
+web: gunicorn djangocrud.wsgi --log-file -
