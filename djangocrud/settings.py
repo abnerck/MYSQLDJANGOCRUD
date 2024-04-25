@@ -77,12 +77,24 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}'''
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djangocrud',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',   # Puede cambiar según la configuración de tu servidor MySQL
+        'PORT': '',        # Puede cambiar según la configuración de tu servidor MySQL
+    }
 }
+
 
 ALLOWED_HOSTS = ['*']
 
